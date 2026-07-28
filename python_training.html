@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Basics – Step‑by‑Step Guide</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f8fc;
+            color: #1a2a3a;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+
+        .guide-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06);
+            padding: 2.8rem 3rem;
+        }
+
+        /* Header */
+        .guide-header {
+            text-align: center;
+            border-bottom: 2px solid #eaf0f6;
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .guide-header h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #0b1a33;
+            letter-spacing: -0.02em;
+        }
+
+        .guide-header h1 i {
+            color: #3776ab;
+            margin-right: 12px;
+        }
+
+        .guide-header .sub {
+            font-size: 1.1rem;
+            color: #4a637e;
+            margin-top: 8px;
+        }
+
+        .guide-header .sub i {
+            color: #3776ab;
+            margin: 0 6px;
+        }
+
+        /* Step styling */
+        .step {
+            margin: 2.6rem 0 1.8rem 0;
+            padding-left: 0.5rem;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #0b1a33;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.6rem;
+        }
+
+        .step h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0b1a33;
+            margin: 0.3rem 0 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step h2 i {
+            color: #3776ab;
+            font-size: 1.7rem;
+        }
+
+        .step p {
+            color: #1f3855;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .step ul,
+        .step ol {
+            margin: 0.6rem 0 1rem 1.6rem;
+            color: #1f3855;
+        }
+
+        .step li {
+            margin-bottom: 0.35rem;
+        }
+
+        .step .highlight-box {
+            background: #f1f7fe;
+            border-left: 5px solid #3776ab;
+            border-radius: 10px;
+            padding: 1rem 1.6rem;
+            margin: 1.2rem 0;
+        }
+
+        .step .highlight-box i {
+            color: #3776ab;
+            margin-right: 10px;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: #0d1b2a;
+            color: #e3eaf0;
+            border-radius: 14px;
+            padding: 1.2rem 1.8rem;
+            margin: 1rem 0 1.6rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            border-left: 5px solid #3776ab;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6e8ba3;
+        }
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        .code-block .string {
+            color: #c3e88d;
+        }
+        .code-block .func {
+            color: #82aaff;
+        }
+        .code-block .builtin {
+            color: #f78c6c;
+        }
+        .code-block .number {
+            color: #f78c6c;
+        }
+        .code-block .op {
+            color: #89ddff;
+        }
+
+        .inline-code {
+            background: #e9eef4;
+            color: #1d3b5c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        /* Table for data types */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.8rem 0;
+            font-size: 0.95rem;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .data-table th {
+            background: #0b1a33;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.8rem 1.2rem;
+            text-align: left;
+        }
+
+        .data-table td {
+            padding: 0.8rem 1.2rem;
+            border-bottom: 1px solid #eaf0f6;
+            background: #fff;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table .type-icon {
+            color: #3776ab;
+            margin-right: 8px;
+        }
+
+        /* Footer */
+        .guide-footer {
+            margin-top: 3.5rem;
+            padding-top: 1.8rem;
+            border-top: 2px solid #eaf0f6;
+            text-align: center;
+            color: #4a637e;
+            font-size: 0.9rem;
+        }
+
+        .guide-footer i {
+            color: #3776ab;
+        }
+
+        @media (max-width: 700px) {
+            .guide-container {
+                padding: 1.5rem 1.2rem;
+            }
+            .guide-header h1 {
+                font-size: 2rem;
+            }
+            .step h2 {
+                font-size: 1.4rem;
+            }
+            .data-table {
+                font-size: 0.8rem;
+            }
+            .data-table th,
+            .data-table td {
+                padding: 0.5rem 0.7rem;
+            }
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.9rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+
+        <!-- ===== HEADER ===== -->
+        <header class="guide-header">
+            <h1><i class="fab fa-python"></i> Python Basics</h1>
+            <div class="sub">
+                <i class="fas fa-flag-checkered"></i> Step‑by‑step guide &nbsp;·&nbsp;
+                <i class="fas fa-code"></i> Syntax, Variables &amp; Data Types
+            </div>
+        </header>
+
+        <!-- ===== STEP 1 ===== -->
+        <div class="step">
+            <div class="step-number">Step 1</div>
+            <h2><i class="fas fa-rocket"></i> What is Python?</h2>
+            <p>
+                Python is a high‑level, interpreted programming language known for its
+                <strong>readability</strong> and <strong>versatility</strong>. It is widely used
+                in web development, data science, automation, and more.
+            </p>
+            <div class="highlight-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Key philosophy:</strong> “Readability counts.” Python uses indentation
+                (whitespace) to define code blocks, making the code clean and easy to follow.
+            </div>
+        </div>
+
+        <!-- ===== STEP 2 ===== -->
+        <div class="step">
+            <div class="step-number">Step 2</div>
+            <h2><i class="fas fa-pencil-alt"></i> Syntax &amp; Basic Rules</h2>
+            <p>
+                Python syntax is minimal and intuitive. Here are the core rules to remember:
+            </p>
+            <ul>
+                <li><strong>Indentation:</strong> Use 4 spaces (or a tab) to indicate blocks of code.
+                    No curly braces <span class="inline-code">{ }</span> are needed.</li>
+                <li><strong>Comments:</strong> Start with <span class="inline-code">#</span> for single‑line comments.
+                    Multi‑line comments use triple quotes <span class="inline-code">""" ... """</span>.</li>
+                <li><strong>Case sensitivity:</strong> <span class="inline-code">myVar</span> and <span class="inline-code">myvar</span> are different.</li>
+                <li><strong>Statements:</strong> Each line is a statement. Semicolons are optional but not recommended.</li>
+            </ul>
+            <div class="code-block">
+                <span class="comment"># This is a comment</span><br>
+                <span class="keyword">if</span> 5 <span class="op">></span> 2: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># colon indicates start of block</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">"Five is greater than two"</span>) &nbsp;<span class="comment"># indentation is mandatory</span>
+            </div>
+        </div>
+
+        <!-- ===== STEP 3 ===== -->
+        <div class="step">
+            <div class="step-number">Step 3</div>
+            <h2><i class="fas fa-tag"></i> Variables – Storing Data</h2>
+            <p>
+                Variables are names that refer to values. In Python, you <strong>don't need to declare
+                a type</strong> – the interpreter infers it at runtime (dynamic typing).
+            </p>
+            <ul>
+                <li><strong>Naming rules:</strong> Start with a letter or underscore, followed by letters,
+                    digits, or underscores. Case‑sensitive.</li>
+                <li><strong>Assignment:</strong> Use the <span class="inline-code">=</span> operator.</li>
+                <li><strong>Multiple assignment:</strong> <span class="inline-code">a, b = 1, 2</span></li>
+            </ul>
+            <div class="code-block">
+                <span class="comment"># Simple assignment</span><br>
+                name = <span class="string">"Alice"</span><br>
+                age = <span class="number">30</span><br>
+                is_student = <span class="builtin">False</span><br><br>
+                <span class="comment"># Multiple assignment</span><br>
+                x, y, z = <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span><br><br>
+                <span class="comment"># Reassign any type</span><br>
+                age = <span class="string">"thirty"</span> &nbsp;&nbsp;<span class="comment"># now age is a string – perfectly valid</span>
+            </div>
+            <div class="highlight-box">
+                <i class="fas fa-info-circle"></i>
+                <strong>Dynamic typing</strong> is flexible, but be mindful of type consistency in
+                operations to avoid runtime errors.
+            </div>
+        </div>
+
+        <!-- ===== STEP 4 ===== -->
+        <div class="step">
+            <div class="step-number">Step 4</div>
+            <h2><i class="fas fa-database"></i> Data Types – The Building Blocks</h2>
+            <p>
+                Python has several built‑in data types. Here are the most common ones you'll use:
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Example</th>
+                        <th>Use case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="type-icon"><i class="fas fa-hashtag"></i></span> Numeric</td>
+                        <td><span class="inline-code">int</span>, <span class="inline-code">float</span>, <span class="inline-code">complex</span></td>
+                        <td><span class="inline-code">42</span>, <span class="inline-code">3.14</span>, <span class="inline-code">2+3j</span></td>
+                        <td>Counts, measurements, scientific</td>
+                    </tr>
+                    <tr>
+                        <td><span class="type-icon"><i class="fas fa-font"></i></span> Text</td>
+                        <td><span class="inline-code">str</span></td>
+                        <td><span class="inline-code">"Hello"</span>, <span class="inline-code">'World'</span></td>
+                        <td>Names, messages, file content</td>
+                    </tr>
+                    <tr>
+                        <td><span class="type-icon"><i class="fas fa-check-circle"></i></span> Boolean</td>
+                        <td><span class="inline-code">bool</span></td>
+                        <td><span class="inline-code">True</span>, <span class="inline-code">False</span></td>
+                        <td>Conditions, flags, comparisons</td>
+                    </tr>
+                    <tr>
+                        <td><span class="type-icon"><i class="fas fa-list"></i></span> Sequence</td>
+                        <td><span class="inline-code">list</span>, <span class="inline-code">tuple</span>, <span class="inline-code">range</span></td>
+                        <td><span class="inline-code">[1,2,3]</span>, <span class="inline-code">(4,5)</span>, <span class="inline-code">range(5)</span></td>
+                        <td>Ordered collections, immutable (tuple)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="type-icon"><i class="fas fa-map"></i></span> Mapping</td>
+                        <td><span class="inline-code">dict</span></td>
+                        <td><span class="inline-code">{"key": "value"}</span></td>
+                        <td>Key‑value pairs, configurations</td>
+                    </tr>
+                    <tr>
+                        <td><span class="type-icon"><i class="fas fa-vector-square"></i></span> Set</td>
+                        <td><span class="inline-code">set</span>, <span class="inline-code">frozenset</span></td>
+                        <td><span class="inline-code">{1,2,3}</span></td>
+                        <td>Unique items, mathematical operations</td>
+                    </tr>
+                    <tr>
+                        <td><span class="type-icon"><i class="fas fa-ban"></i></span> None</td>
+                        <td><span class="inline-code">NoneType</span></td>
+                        <td><span class="inline-code">None</span></td>
+                        <td>Absence of a value, null placeholder</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+                <span class="comment"># Examples of each type</span><br>
+                age = <span class="number">25</span>               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># int</span><br>
+                price = <span class="number">19.99</span>           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># float</span><br>
+                name = <span class="string">"Python"</span>         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># str</span><br>
+                is_ready = <span class="builtin">True</span>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># bool</span><br>
+                colors = [<span class="string">"red"</span>, <span class="string">"green"</span>, <span class="string">"blue"</span>] &nbsp;&nbsp;<span class="comment"># list</span><br>
+                coords = (<span class="number">10</span>, <span class="number">20</span>)         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># tuple</span><br>
+                person = {<span class="string">"name"</span>: <span class="string">"Bob"</span>, <span class="string">"age"</span>: <span class="number">30</span>} &nbsp;<span class="comment"># dict</span><br>
+                unique = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>}           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># set</span><br>
+                empty = <span class="builtin">None</span>             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># NoneType</span>
+            </div>
+        </div>
+
+        <!-- ===== STEP 5 ===== -->
+        <div class="step">
+            <div class="step-number">Step 5</div>
+            <h2><i class="fas fa-exchange-alt"></i> Type Conversion (Casting)</h2>
+            <p>
+                You can convert between types using built‑in functions:
+                <span class="inline-code">int()</span>, <span class="inline-code">float()</span>,
+                <span class="inline-code">str()</span>, <span class="inline-code">bool()</span>,
+                <span class="inline-code">list()</span>, <span class="inline-code">tuple()</span>, etc.
+            </p>
+            <div class="code-block">
+                <span class="comment"># Convert string to integer</span><br>
+                num_str = <span class="string">"123"</span><br>
+                num_int = <span class="builtin">int</span>(num_str) &nbsp;&nbsp;<span class="comment"># 123 (int)</span><br><br>
+                <span class="comment"># Convert integer to float</span><br>
+                num_float = <span class="builtin">float</span>(num_int) &nbsp;&nbsp;<span class="comment"># 123.0 (float)</span><br><br>
+                <span class="comment"># Convert number to string</span><br>
+                text = <span class="builtin">str</span>(num_int) + <span class="string">" apples"</span> &nbsp;&nbsp;<span class="comment"># "123 apples"</span><br><br>
+                <span class="comment"># List to tuple</span><br>
+                my_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]<br>
+                my_tuple = <span class="builtin">tuple</span>(my_list) &nbsp;&nbsp;<span class="comment"># (1, 2, 3)</span>
+            </div>
+            <div class="highlight-box">
+                <i class="fas fa-exclamation-triangle" style="color:#e6a020;"></i>
+                <strong>Caution:</strong> Not all conversions are possible. For example,
+                <span class="inline-code">int("hello")</span> raises a <span class="inline-code">ValueError</span>.
+                Always validate or use <span class="inline-code">try/except</span>.
+            </div>
+        </div>
+
+        <!-- ===== STEP 6 ===== -->
+        <div class="step">
+            <div class="step-number">Step 6</div>
+            <h2><i class="fas fa-calculator"></i> Basic Operators</h2>
+            <p>
+                Python supports a rich set of operators to perform computations and comparisons.
+            </p>
+            <ul>
+                <li><strong>Arithmetic:</strong> <span class="inline-code">+</span>, <span class="inline-code">-</span>, <span class="inline-code">*</span>, <span class="inline-code">/</span>, <span class="inline-code">//</span> (floor), <span class="inline-code">%</span> (modulus), <span class="inline-code">**</span> (exponent).</li>
+                <li><strong>Comparison:</strong> <span class="inline-code">==</span>, <span class="inline-code">!=</span>, <span class="inline-code">&gt;</span>, <span class="inline-code">&lt;</span>, <span class="inline-code">&gt;=</span>, <span class="inline-code">&lt;=</span> (return <span class="inline-code">bool</span>).</li>
+                <li><strong>Logical:</strong> <span class="inline-code">and</span>, <span class="inline-code">or</span>, <span class="inline-code">not</span>.</li>
+                <li><strong>Assignment:</strong> <span class="inline-code">=</span>, <span class="inline-code">+=</span>, <span class="inline-code">-=</span>, etc.</li>
+            </ul>
+            <div class="code-block">
+                <span class="comment"># Arithmetic</span><br>
+                result = <span class="number">10</span> <span class="op">+</span> <span class="number">3</span> <span class="op">*</span> <span class="number">2</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 16 (multiplication first)</span><br>
+                power = <span class="number">2</span> <span class="op">**</span> <span class="number">4</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 16</span><br>
+                floor_div = <span class="number">17</span> <span class="op">//</span> <span class="number">5</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 3 (integer division)</span><br><br>
+                <span class="comment"># Comparison &amp; Logical</span><br>
+                age = <span class="number">22</span><br>
+                is_adult = age <span class="op">>=</span> <span class="number">18</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># True</span><br>
+                can_vote = is_adult <span class="keyword">and</span> age <span class="op">&lt;</span> <span class="number">100</span> &nbsp;&nbsp;<span class="comment"># True</span>
+            </div>
+        </div>
+
+        <!-- ===== STEP 7 ===== -->
+        <div class="step">
+            <div class="step-number">Step 7</div>
+            <h2><i class="fas fa-keyboard"></i> Basic Input / Output</h2>
+            <p>
+                Interacting with the user is easy with <span class="inline-code">print()</span>
+                for output and <span class="inline-code">input()</span> for reading from the console.
+            </p>
+            <div class="code-block">
+                <span class="comment"># Output</span><br>
+                <span class="builtin">print</span>(<span class="string">"Hello, World!"</span>)<br>
+                name = <span class="string">"Alice"</span><br>
+                <span class="builtin">print</span>(<span class="string">f"Welcome, {name}!"</span>) &nbsp;&nbsp;<span class="comment"># f‑string formatting</span><br><br>
+                <span class="comment"># Input (always returns a string)</span><br>
+                user_input = <span class="builtin">input</span>(<span class="string">"Enter your age: "</span>)<br>
+                age = <span class="builtin">int</span>(user_input) &nbsp;&nbsp;<span class="comment"># convert to int for calculations</span><br>
+                <span class="builtin">print</span>(<span class="string">f"Next year you'll be {age + 1}"</span>)
+            </div>
+            <div class="highlight-box">
+                <i class="fas fa-info-circle"></i>
+                <strong>Remember:</strong> <span class="inline-code">input()</span> always returns a
+                <span class="inline-code">str</span>. Cast it explicitly if you need a different type.
+            </div>
+        </div>
+
+        <!-- ===== STEP 8 ===== -->
+        <div class="step">
+            <div class="step-number">Step 8</div>
+            <h2><i class="fas fa-flag-checkered"></i> Putting It All Together</h2>
+            <p>
+                Here's a small program that uses <strong>variables</strong>, <strong>data types</strong>,
+                <strong>type conversion</strong>, and <strong>input/output</strong> in a practical way.
+            </p>
+            <div class="code-block">
+                <span class="comment"># Simple shopping calculator</span><br>
+                <span class="comment"># Ask for item name and price</span><br>
+                item = <span class="builtin">input</span>(<span class="string">"Enter item name: "</span>)<br>
+                price_str = <span class="builtin">input</span>(<span class="string">"Enter price: "</span>)<br>
+                quantity_str = <span class="builtin">input</span>(<span class="string">"Enter quantity: "</span>)<br><br>
+                <span class="comment"># Convert to appropriate types</span><br>
+                price = <span class="builtin">float</span>(price_str)<br>
+                quantity = <span class="builtin">int</span>(quantity_str)<br><br>
+                total = price <span class="op">*</span> quantity<br><br>
+                <span class="comment"># Display result with formatting</span><br>
+                <span class="builtin">print</span>(<span class="string">f"Item: {item}"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"Total cost: ${total:.2f}"</span>) &nbsp;&nbsp;<span class="comment"># two decimal places</span>
+            </div>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="guide-footer">
+            <i class="fab fa-python"></i> Python Basics &nbsp;·&nbsp; Step‑by‑step guide &nbsp;·&nbsp;
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i> Ready to code
+        </footer>
+
+    </div>
+</body>
+</html>
