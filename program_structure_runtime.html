@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Structure &amp; Runtime Dependencies</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f8fc;
+            color: #1a2a3a;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+
+        .doc-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06);
+            padding: 2.8rem 3rem;
+        }
+
+        /* Header */
+        .doc-header {
+            text-align: center;
+            border-bottom: 2px solid #eaf0f6;
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .doc-header h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #0b1a33;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-header h1 i {
+            color: #3776ab;
+            margin-right: 12px;
+        }
+
+        .doc-header .sub {
+            font-size: 1.1rem;
+            color: #4a637e;
+            margin-top: 8px;
+        }
+
+        .doc-header .sub i {
+            color: #3776ab;
+            margin: 0 6px;
+        }
+
+        /* Sections */
+        .section {
+            margin: 2.6rem 0 2rem 0;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0b1a33;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section h2 i {
+            color: #3776ab;
+            font-size: 1.7rem;
+        }
+
+        .section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a3455;
+            margin: 1.5rem 0 0.6rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 i {
+            color: #3776ab;
+            width: 28px;
+        }
+
+        .section p {
+            color: #1f3855;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .section ul,
+        .section ol {
+            margin: 0.6rem 0 1rem 1.6rem;
+            color: #1f3855;
+        }
+
+        .section li {
+            margin-bottom: 0.35rem;
+        }
+
+        .highlight-box {
+            background: #f1f7fe;
+            border-left: 5px solid #3776ab;
+            border-radius: 10px;
+            padding: 1rem 1.6rem;
+            margin: 1.2rem 0;
+        }
+
+        .highlight-box i {
+            color: #3776ab;
+            margin-right: 10px;
+        }
+
+        .warning-box {
+            background: #fef6e6;
+            border-left: 5px solid #e6a020;
+            border-radius: 10px;
+            padding: 1rem 1.6rem;
+            margin: 1.2rem 0;
+        }
+
+        .warning-box i {
+            color: #e6a020;
+            margin-right: 10px;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: #0d1b2a;
+            color: #e3eaf0;
+            border-radius: 14px;
+            padding: 1.2rem 1.8rem;
+            margin: 1rem 0 1.6rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            border-left: 5px solid #3776ab;
+            position: relative;
+        }
+
+        .code-block .comment {
+            color: #6e8ba3;
+        }
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        .code-block .string {
+            color: #c3e88d;
+        }
+        .code-block .func {
+            color: #82aaff;
+        }
+        .code-block .builtin {
+            color: #f78c6c;
+        }
+        .code-block .number {
+            color: #f78c6c;
+        }
+        .code-block .op {
+            color: #89ddff;
+        }
+        .code-block .class-name {
+            color: #ffcb6b;
+        }
+        .code-block .annotation {
+            color: #89ddff;
+        }
+
+        .inline-code {
+            background: #e9eef4;
+            color: #1d3b5c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        /* Table for runtime & dependencies */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.8rem 0;
+            font-size: 0.95rem;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .matrix-table th {
+            background: #0b1a33;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.9rem 1.2rem;
+            text-align: left;
+        }
+
+        .matrix-table td {
+            padding: 0.9rem 1.2rem;
+            border-bottom: 1px solid #eaf0f6;
+            background: #fff;
+            vertical-align: top;
+        }
+
+        .matrix-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .matrix-table .lang-icon {
+            color: #3776ab;
+            margin-right: 8px;
+        }
+
+        .matrix-table .badge-runtime {
+            display: inline-block;
+            background: #eaf3fa;
+            color: #1f5a8e;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .doc-footer {
+            margin-top: 3.5rem;
+            padding-top: 1.8rem;
+            border-top: 2px solid #eaf0f6;
+            text-align: center;
+            color: #4a637e;
+            font-size: 0.9rem;
+        }
+
+        .doc-footer i {
+            color: #3776ab;
+        }
+
+        @media (max-width: 700px) {
+            .doc-container {
+                padding: 1.5rem 1.2rem;
+            }
+            .doc-header h1 {
+                font-size: 1.8rem;
+            }
+            .section h2 {
+                font-size: 1.4rem;
+            }
+            .matrix-table {
+                font-size: 0.82rem;
+            }
+            .matrix-table th,
+            .matrix-table td {
+                padding: 0.6rem 0.8rem;
+            }
+            .code-block {
+                font-size: 0.78rem;
+                padding: 0.9rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+
+        <!-- ===== HEADER ===== -->
+        <header class="doc-header">
+            <h1><i class="fas fa-sitemap"></i> Program Structure &amp; Runtimes</h1>
+            <div class="sub">
+                <i class="fas fa-code"></i> Common patterns across C, Java, Python &amp; Node.js &nbsp;·&nbsp;
+                <i class="fas fa-cogs"></i> Dependencies &amp; execution environments
+            </div>
+        </header>
+
+        <!-- ===== SECTION 1: THE COMMON PATTERN ===== -->
+        <section class="section">
+            <h2><i class="fas fa-chess-queen"></i> The Universal Program Structure</h2>
+            <p>
+                Regardless of the programming language, almost every program follows the same fundamental blueprint:
+            </p>
+            <ol>
+                <li><strong>Import / Include / Reference</strong> – Bring in external libraries, modules, or headers.</li>
+                <li><strong>Entry Point</strong> – A designated function (e.g., <span class="inline-code">main</span>) where execution begins.</li>
+                <li><strong>Statements</strong> – The actual logic (variables, loops, conditionals, I/O).</li>
+                <li><strong>Exit</strong> – Returning an exit code (often <span class="inline-code">0</span> for success).</li>
+            </ol>
+            <div class="highlight-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Why this matters:</strong> Once you understand this pattern, switching between languages becomes
+                much easier. You're just learning new syntax for the same concepts.
+            </div>
+        </section>
+
+        <!-- ===== SECTION 2: LANGUAGE COMPARISONS ===== -->
+        <section class="section">
+            <h2><i class="fas fa-code-branch"></i> Structure Comparison by Language</h2>
+            <p>Below are the canonical "Hello, World!" programs in four major languages, highlighting the common elements.</p>
+
+            <!-- C -->
+            <h3><i class="fas fa-microchip"></i> C</h3>
+            <div class="code-block">
+                <span class="comment">/* 1. Include headers */</span><br>
+                <span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Standard I/O library</span><br>
+                <span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Utilities (exit codes)</span><br><br>
+                <span class="comment">/* 2. Entry point */</span><br>
+                <span class="keyword">int</span> <span class="func">main</span>(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[]) &nbsp;&nbsp;<span class="comment">// Command‑line arguments</span><br>
+                {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 3. Statements</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">printf</span>(<span class="string">"Hello, World!\n"</span>);<br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 4. Exit</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="number">0</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Success</span><br>
+                }
+            </div>
+
+            <!-- Java -->
+            <h3><i class="fab fa-java"></i> Java</h3>
+            <div class="code-block">
+                <span class="comment">/* 1. Package &amp; Imports */</span><br>
+                <span class="keyword">package</span> com.example.training; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Namespace</span><br>
+                <span class="keyword">import</span> java.io.*; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Importing classes</span><br>
+                <span class="keyword">import</span> java.util.*;<br><br>
+                <span class="comment">/* 2. Class definition (mandatory) */</span><br>
+                <span class="keyword">public</span> <span class="keyword">class</span> <span class="class-name">Main</span> { &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// File name must match class name</span><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/* 3. Entry point (exact signature) */</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="func">main</span>(String[] args) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 4. Statements</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"Hello, World!"</span>);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                } &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Exit is implicit when main returns</span>
+            </div>
+
+            <!-- Python -->
+            <h3><i class="fab fa-python"></i> Python</h3>
+            <div class="code-block">
+                <span class="comment"># 1. Imports</span><br>
+                <span class="keyword">import</span> time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Built‑in module</span><br>
+                <span class="keyword">import</span> sys &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># System‑specific</span><br><br>
+                <span class="comment"># 2. (Optional) Define main function</span><br>
+                <span class="keyword">def</span> <span class="func">main</span>():<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 3. Statements</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">"Hello, World!"</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;time.sleep(<span class="number">1</span>) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># using imported module</span><br><br>
+                <span class="comment"># 4. Entry point guard (best practice)</span><br>
+                <span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;main() &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Execute only when run directly</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;sys.exit(<span class="number">0</span>) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Optional exit code</span>
+            </div>
+
+            <!-- Node.js -->
+            <h3><i class="fab fa-node-js"></i> Node.js (JavaScript)</h3>
+            <div class="code-block">
+                <span class="comment">// 1. Imports (CommonJS or ES Modules)</span><br>
+                <span class="keyword">const</span> fs = <span class="builtin">require</span>(<span class="string">'fs'</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// CommonJS style</span><br>
+                <span class="keyword">const</span> os = <span class="builtin">require</span>(<span class="string">'os'</span>);<br>
+                <span class="comment">// OR: import * as fs from 'fs';  // ES Module style</span><br><br>
+                <span class="comment">// 2. Entry point (top‑level execution in Node)</span><br>
+                <span class="comment">// No explicit main() – the file itself is the entry.</span><br>
+                <span class="comment">// 3. Statements</span><br>
+                <span class="builtin">console</span>.log(<span class="string">"Hello, World!"</span>);<br><br>
+                <span class="comment">// 4. Exit (optional, default is 0)</span><br>
+                process.exit(<span class="number">0</span>); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Explicit success exit</span>
+            </div>
+        </section>
+
+        <!-- ===== SECTION 3: RUNTIME & DEPENDENCIES ===== -->
+        <section class="section">
+            <h2><i class="fas fa-cubes"></i> Runtimes &amp; Dependencies – The Hidden Requirement</h2>
+            <p>
+                Writing the code is only half the battle. To actually run your program, the target machine must have
+                the <strong>runtime environment</strong> installed. Additionally, any <strong>external libraries</strong>
+                you reference must be present.
+            </p>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Critical:</strong> If you share a compiled executable or a source file with your end‑user,
+                they must install the required runtime <em>and</em> all dependencies. Otherwise, the program will
+                fail immediately.
+            </div>
+
+            <h3><i class="fas fa-table"></i> Runtime &amp; Dependency Matrix</h3>
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Runtime / VM</th>
+                        <th>Compilation Model</th>
+                        <th>Dependencies &amp; References</th>
+                        <th>End‑User Requirement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="lang-icon"><i class="fas fa-microchip"></i></span> <strong>C</strong></td>
+                        <td><span class="badge-runtime">C Runtime Library</span> (MSVCRT, glibc)</td>
+                        <td>Compiled to native machine code</td>
+                        <td>Header files (<span class="inline-code">.h</span>) &amp; static/shared libraries (<span class="inline-code">.lib</span>, <span class="inline-code">.so</span>)</td>
+                        <td>OS provides the runtime; but specific versions (e.g., Visual C++ Redistributable) may be needed.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="lang-icon"><i class="fab fa-java"></i></span> <strong>Java</strong></td>
+                        <td><span class="badge-runtime">JVM</span> (Java Virtual Machine) + JRE</td>
+                        <td>Compiled to bytecode (<span class="inline-code">.class</span>)</td>
+                        <td><span class="inline-code">import</span> statements + external JAR files</td>
+                        <td><strong>Must install JRE / JDK</strong> to run the bytecode.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="lang-icon"><i class="fas fa-dot-circle"></i></span> <strong>C# (.NET)</strong></td>
+                        <td><span class="badge-runtime">.NET Runtime</span> (CLR / CoreCLR)</td>
+                        <td>Compiled to Intermediate Language (IL) – JIT compiled</td>
+                        <td><span class="inline-code">using</span> directives + NuGet packages / DLLs</td>
+                        <td><strong>Must install .NET Runtime</strong> (or .NET Desktop Runtime).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="lang-icon"><i class="fab fa-python"></i></span> <strong>Python</strong></td>
+                        <td><span class="badge-runtime">Python Interpreter</span> (CPython, PyPy)</td>
+                        <td>Interpreted (compiled to <span class="inline-code">.pyc</span> bytecode internally)</td>
+                        <td><span class="inline-code">import</span> modules + PyPI packages (e.g., <span class="inline-code">requests</span>)</td>
+                        <td><strong>Must install Python interpreter</strong> and <span class="inline-code">pip install</span> any external packages.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="lang-icon"><i class="fab fa-node-js"></i></span> <strong>Node.js</strong></td>
+                        <td><span class="badge-runtime">Node.js Runtime</span> (V8 engine)</td>
+                        <td>Interpreted / JIT compiled</td>
+                        <td><span class="inline-code">require</span> / <span class="inline-code">import</span> + npm packages (in <span class="inline-code">node_modules</span>)</td>
+                        <td><strong>Must install Node.js</strong> and run <span class="inline-code">npm install</span> to fetch dependencies.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3><i class="fas fa-link"></i> Understanding Dependencies (References)</h3>
+            <p>
+                When you use an external library (e.g., <span class="inline-code">requests</span> in Python, 
+                <span class="inline-code">express</span> in Node, or <span class="inline-code">gson</span> in Java),
+                you are creating a <strong>reference</strong> or <strong>dependency</strong>.
+            </p>
+            <ul>
+                <li>
+                    <strong>During Development:</strong> You reference the library in your code (via import/include)
+                    and your IDE/build tool resolves it.
+                </li>
+                <li>
+                    <strong>During Runtime:</strong> The actual library files (DLLs, JARs, packages) must be present
+                    on the target system. The runtime loads these files when your program starts.
+                </li>
+            </ul>
+            <div class="highlight-box">
+                <i class="fas fa-info-circle"></i>
+                <strong>Pro Tip:</strong> Always document your runtime requirements and dependencies.
+                Use a <span class="inline-code">requirements.txt</span> (Python), <span class="inline-code">package.json</span> (Node),
+                <span class="inline-code">pom.xml</span> (Java), or <span class="inline-code">.csproj</span> (C#) to
+                track them explicitly.
+            </div>
+        </section>
+
+        <!-- ===== SECTION 4: WHY THIS MATTERS ===== -->
+        <section class="section">
+            <h2><i class="fas fa-question-circle"></i> Why This Matters for Every Developer</h2>
+            <p>
+                Understanding the distinction between source code, compilation, runtime, and dependencies is crucial
+                for:
+            </p>
+            <ul>
+                <li>
+                    <strong>Deployment:</strong> You can't just give someone a <span class="inline-code">.py</span> file
+                    and expect it to run without Python installed.
+                </li>
+                <li>
+                    <strong>Containerization (Docker):</strong> Docker images are built <em>specifically</em> to
+                    include the exact runtime and dependencies required.
+                </li>
+                <li>
+                    <strong>Cross‑platform issues:</strong> Some runtimes (like .NET Core / .NET 5+) are cross‑platform,
+                    while others (like the full .NET Framework) are Windows‑only.
+                </li>
+                <li>
+                    <strong>Version conflicts:</strong> Having the wrong version of the runtime or a dependency
+                    (e.g., Python 3.10 vs 3.12) can break your program.
+                </li>
+            </ul>
+
+            <div class="warning-box">
+                <i class="fas fa-hard-hat"></i>
+                <strong>Real‑world scenario:</strong> You developed a C# application using .NET 8.0 and a third‑party
+                NuGet package. To run it on a client's machine, they <em>must</em> install the .NET 8.0 Runtime
+                <em>and</em> the NuGet package (unless you publish it as a self‑contained executable).
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="doc-footer">
+            <i class="fas fa-sitemap"></i> Program Structure &amp; Runtimes &nbsp;·&nbsp;
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i> Master the fundamentals
+        </footer>
+
+    </div>
+</body>
+</html>
