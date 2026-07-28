@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Runtime &amp; Dependency Flowchart</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #f4f8fc;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.08);
+            padding: 2.5rem 2rem;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #0b1a33;
+            margin-bottom: 0.3rem;
+        }
+        h1 i {
+            color: #3776ab;
+        }
+        .subtitle {
+            text-align: center;
+            color: #4a637e;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+        .subtitle i {
+            color: #3776ab;
+        }
+
+        /* Grid Layout */
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            align-items: stretch;
+        }
+        /* First row has 3 columns: Phase, Cloud, Desktop */
+        .row-phase {
+            grid-template-columns: 0.8fr 1.2fr 1.2fr;
+        }
+
+        .phase-label {
+            font-weight: 700;
+            color: #0b1a33;
+            background: #eaf0f6;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+            height: 100%;
+        }
+        .phase-label i {
+            color: #3776ab;
+            width: 24px;
+        }
+
+        .card {
+            background: #fafcff;
+            border: 1px solid #e2e9f2;
+            border-radius: 16px;
+            padding: 1.2rem 1.2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: 0.2s;
+        }
+        .card-header {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-header i {
+            font-size: 1.2rem;
+        }
+        .cloud .card-header {
+            color: #0d6e9e;
+        }
+        .desktop .card-header {
+            color: #b45f06;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.2rem 0;
+        }
+        .card ul li {
+            padding: 0.25rem 0;
+            border-bottom: 1px dashed #ecf1f7;
+            font-size: 0.92rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .card ul li:last-child {
+            border-bottom: none;
+        }
+        .card ul li i {
+            color: #3776ab;
+            margin-top: 3px;
+            font-size: 0.8rem;
+            min-width: 16px;
+        }
+        .tag {
+            display: inline-block;
+            background: #eaf3fa;
+            color: #1f5a8e;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .tag-orange {
+            background: #fef1e0;
+            color: #b45f06;
+        }
+        .tag-green {
+            background: #e3f5e9;
+            color: #1d6b3e;
+        }
+
+        .arrow-down {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #8aa3bc;
+            padding: 0.1rem 0;
+        }
+
+        .footer-note {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eaf0f6;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #4a637e;
+        }
+        .footer-note i {
+            color: #3776ab;
+        }
+
+        @media (max-width: 800px) {
+            .row {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .phase-label {
+                justify-content: center;
+            }
+            .row-phase {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-project-diagram"></i> Runtime &amp; Dependency Flowchart</h1>
+        <div class="subtitle">
+            <i class="fas fa-arrow-right"></i> Development → Build → End‑User Machine
+        </div>
+
+        <div class="flowchart">
+
+            <!-- ROW 1: Phase + Headers -->
+            <div class="row row-phase">
+                <div class="phase-label"><i class="fas fa-layer-group"></i> Phase</div>
+                <div class="card cloud">
+                    <div class="card-header"><i class="fas fa-cloud"></i> Cloud / Web App</div>
+                    <div style="font-size:0.85rem; color:#4a637e;">(REST API, SaaS)</div>
+                </div>
+                <div class="card desktop">
+                    <div class="card-header"><i class="fas fa-desktop"></i> Desktop Plugin / Extension</div>
+                    <div style="font-size:0.85rem; color:#4a637e;">(Excel, CAD, Primavera)</div>
+                </div>
+            </div>
+
+            <div class="arrow-down"><i class="fas fa-chevron-down"></i></div>
+
+            <!-- ROW 2: Development -->
+            <div class="row row-phase">
+                <div class="phase-label"><i class="fas fa-code"></i> Development<br><span style="font-weight:400;font-size:0.8rem;color:#4a637e;">(Your machine)</span></div>
+                <div class="card cloud">
+                    <div><span class="tag">Code</span> <span class="tag-green">pip install</span></div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Import standard libs</li>
+                        <li><i class="fas fa-check-circle"></i> <code>import requests</code></li>
+                        <li><i class="fas fa-check-circle"></i> <code>import flask</code></li>
+                        <li><i class="fas fa-check-circle"></i> No host app required</li>
+                    </ul>
+                    <div style="margin-top:6px;font-size:0.8rem;background:#eef5fb;padding:0.3rem 0.8rem;border-radius:20px;">
+                        <i class="fas fa-link"></i> Refers to: Public REST APIs
+                    </div>
+                </div>
+                <div class="card desktop">
+                    <div><span class="tag">Code</span> <span class="tag-orange">COM / .NET / Native</span></div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Import COM modules</li>
+                        <li><i class="fas fa-check-circle"></i> <code>import win32com</code></li>
+                        <li><i class="fas fa-check-circle"></i> Reference SDK DLLs (e.g., BricsCAD API)</li>
+                        <li><i class="fas fa-check-circle"></i> Requires host app to be installed</li>
+                    </ul>
+                    <div style="margin-top:6px;font-size:0.8rem;background:#fef1e0;padding:0.3rem 0.8rem;border-radius:20px;">
+                        <i class="fas fa-cubes"></i> Refers to: Vendor SDK (Excel Object Model, CAD API)
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-down"><i class="fas fa-chevron-down"></i></div>
+
+            <!-- ROW 3: Build / Package -->
+            <div class="row row-phase">
+                <div class="phase-label"><i class="fas fa-box"></i> Build / Package</div>
+                <div class="card cloud">
+                    <div><span class="tag">Artifact</span></div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Source code + requirements.txt</li>
+                        <li><i class="fas fa-check-circle"></i> Docker image (optional)</li>
+                        <li><i class="fas fa-check-circle"></i> No compilation needed</li>
+                    </ul>
+                </div>
+                <div class="card desktop">
+                    <div><span class="tag">Artifact</span></div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Compiled .dll / .exe</li>
+                        <li><i class="fas fa-check-circle"></i> Plugin folder + manifest</li>
+                        <li><i class="fas fa-check-circle"></i> Registry entries (sometimes)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down"><i class="fas fa-chevron-down"></i></div>
+
+            <!-- ROW 4: End-User Runtime -->
+            <div class="row row-phase">
+                <div class="phase-label"><i class="fas fa-user"></i> End-User Machine</div>
+                <div class="card cloud" style="border-left:4px solid #3776ab;">
+                    <div><span class="tag tag-green">Runtime</span></div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Python / Node / .NET Core</li>
+                        <li><i class="fas fa-check-circle"></i> Run <code>pip install -r requirements.txt</code></li>
+                        <li><i class="fas fa-check-circle"></i> <strong>No host app required</strong></li>
+                    </ul>
+                    <div style="margin-top:8px;background:#e3f5e9;padding:0.4rem 1rem;border-radius:10px;font-weight:600;color:#1d6b3e;">
+                        <i class="fas fa-check"></i> Works standalone
+                    </div>
+                </div>
+                <div class="card desktop" style="border-left:4px solid #b45f06;">
+                    <div><span class="tag tag-orange">Runtime + Host</span></div>
+                    <ul>
+                        <li><i class="fas fa-exclamation-triangle" style="color:#b45f06;"></i> <strong>Must have:</strong> Host app installed (Excel, BricsCAD, etc.)</li>
+                        <li><i class="fas fa-exclamation-triangle" style="color:#b45f06;"></i> <strong>Must have:</strong> .NET Framework / C++ Redistributable</li>
+                        <li><i class="fas fa-exclamation-triangle" style="color:#b45f06;"></i> Vendor SDK / COM libraries registered</li>
+                    </ul>
+                    <div style="margin-top:8px;background:#fef1e0;padding:0.4rem 1rem;border-radius:10px;font-weight:600;color:#b45f06;">
+                        <i class="fas fa-exclamation-triangle"></i> Fails if host app / SDK missing
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            <span><i class="fas fa-arrow-right"></i> <strong>Cloud:</strong> Light dependency – just the interpreter.</span>
+            <span><i class="fas fa-arrow-right"></i> <strong>Desktop:</strong> Heavy dependency – host app + vendor SDK required.</span>
+            <span><i class="fas fa-code"></i> Python Training · esudasgfx</span>
+        </div>
+    </div>
+</body>
+</html>
