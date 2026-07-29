@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Training – July 29, 2026 – Full Guide</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f8fc;
+            color: #1a2a3a;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06);
+            padding: 2.8rem 3rem;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #0b1a33;
+            border-bottom: 2px solid #eaf0f6;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        h1 i {
+            color: #3776ab;
+            margin-right: 12px;
+        }
+        h2 {
+            font-size: 1.8rem;
+            color: #0b1a33;
+            margin: 2.2rem 0 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h2 i {
+            color: #3776ab;
+            font-size: 1.6rem;
+        }
+        h3 {
+            font-size: 1.3rem;
+            color: #1a3455;
+            margin: 1.5rem 0 0.6rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h3 i {
+            color: #3776ab;
+            width: 28px;
+        }
+        p {
+            color: #1f3855;
+            margin-bottom: 0.8rem;
+        }
+        ul,
+        ol {
+            margin: 0.6rem 0 1rem 1.6rem;
+            color: #1f3855;
+        }
+        li {
+            margin-bottom: 0.35rem;
+        }
+        .inline-code {
+            background: #e9eef4;
+            color: #1d3b5c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+        .code-block {
+            background: #0d1b2a;
+            color: #e3eaf0;
+            border-radius: 14px;
+            padding: 1.2rem 1.8rem;
+            margin: 1rem 0 1.6rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            border-left: 5px solid #3776ab;
+        }
+        .code-block .comment {
+            color: #6e8ba3;
+        }
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        .code-block .string {
+            color: #c3e88d;
+        }
+        .code-block .func {
+            color: #82aaff;
+        }
+        .code-block .builtin {
+            color: #f78c6c;
+        }
+        .code-block .number {
+            color: #f78c6c;
+        }
+        .code-block .op {
+            color: #89ddff;
+        }
+        .highlight-box {
+            background: #f1f7fe;
+            border-left: 5px solid #3776ab;
+            border-radius: 10px;
+            padding: 1rem 1.6rem;
+            margin: 1.2rem 0;
+        }
+        .highlight-box i {
+            color: #3776ab;
+            margin-right: 10px;
+        }
+        .warning-box {
+            background: #fef6e6;
+            border-left: 5px solid #e6a020;
+            border-radius: 10px;
+            padding: 1rem 1.6rem;
+            margin: 1.2rem 0;
+        }
+        .warning-box i {
+            color: #e6a020;
+            margin-right: 10px;
+        }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eaf0f6;
+            text-align: center;
+            color: #4a637e;
+            font-size: 0.9rem;
+        }
+        .footer i {
+            color: #3776ab;
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.5rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.9rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <h1><i class="fab fa-python"></i> Today's Session – Python Basics &amp; Beyond</h1>
+        <p><strong>Date:</strong> July 29, 2026 &nbsp;|&nbsp; <strong>Focus:</strong> Variables, lists, loops, conditionals, and frontend/backend integration.</p>
+
+        <!-- ========================================================== -->
+        <h2><i class="fas fa-flag-checkered"></i> 1. The Code We Wrote – Step by Step</h2>
+        <p>Let's break down the Python program discussed during the session.</p>
+
+        <!-- ========================================================== -->
+        <h3><i class="fas fa-tag"></i> 1.1 Variables &amp; Comments</h3>
+        <div class="code-block">
+            <span class="comment"># number_of_p6_task = 40   # declaration of variable –    //Console application</span><br>
+            <span class="comment"># additional_duration = input("Enter Additional Duration")   # while, for</span>
+        </div>
+        <ul>
+            <li><span class="inline-code">#</span> starts a comment – it's ignored by Python.</li>
+            <li><span class="inline-code">number_of_p6_task</span> is a variable (commented out here). In a real program, we'd assign a number like <span class="inline-code">40</span>.</li>
+            <li><span class="inline-code">input("Enter Additional Duration")</span> reads a <strong>string</strong> from the user. We'll see later how to convert it to a number.</li>
+        </ul>
+
+        <!-- ========================================================== -->
+        <h3><i class="fas fa-list"></i> 1.2 Lists – Storing Multiple Values</h3>
+        <div class="code-block">
+            row = [<span class="string">'T3'</span>, <span class="string">'28-07-2026'</span>, <span class="number">0</span>, <span class="number">6.0</span>]  <span class="comment"># n number values -- count we don't know -- 1000</span><br>
+            start_index = <span class="number">0</span>
+        </div>
+        <ul>
+            <li>A <strong>list</strong> is an ordered collection of items. Here <span class="inline-code">row</span> holds four elements: a string (task name), a date string, an integer (0), and a float (6.0).</li>
+            <li>Lists are <strong>indexed</strong> from <span class="inline-code">0</span>. So <span class="inline-code">row[0]</span> is <span class="inline-code">'T3'</span>, <span class="inline-code">row[1]</span> is <span class="inline-code">'28-07-2026'</span>, etc.</li>
+            <li><span class="inline-code">start_index = 0</span> is a counter that we'll use to iterate through the list.</li>
+        </ul>
+
+        <!-- ========================================================== -->
+        <h3><i class="fas fa-repeat"></i> 1.3 While Loop – Iterating Over a List</h3>
+        <div class="code-block">
+            <span class="keyword">while</span> start_index < <span class="builtin">len</span>(row):   <span class="comment"># number of elements</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;unum = row[start_index]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> unum == <span class="number">1000</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">exit</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;start_index = start_index + <span class="number">1</span>   <span class="comment"># increment statement -- 5</span>
+        </div>
+        <ul>
+            <li><span class="inline-code">while start_index < len(row):</span> – loop as long as <span class="inline-code">start_index</span> is less than the list length.</li>
+            <li><span class="inline-code">unum = row[start_index]</span> – get the current element.</li>
+            <li><span class="inline-code">if unum == 1000: exit</span> – if the element equals 1000, terminate the program.</li>
+            <li><span class="inline-code">start_index = start_index + 1</span> – increment the counter to move to the next element.</li>
+        </ul>
+        <div class="warning-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Note:</strong> In the session code, the <span class="inline-code">while</span> line was missing a colon <span class="inline-code">:</span> and the <span class="inline-code">exit</span> should be <span class="inline-code">exit()</span> (or <span class="inline-code">sys.exit()</span>). Also, <span class="inline-code">row_all</span> was not defined – we'll fix that.
+        </div>
+
+        <!-- ========================================================== -->
+        <h3><i class="fas fa-calculator"></i> 1.4 User Input &amp; Type Conversion</h3>
+        <div class="code-block">
+            additional_duration = <span class="builtin">input</span>(<span class="string">"Enter Additional Duration"</span>)<br>
+            total_duration = row_all[<span class="number">2</span>] + <span class="builtin">int</span>(additional_duration)<br>
+            <span class="builtin">print</span>(<span class="string">' Total Duration is :'</span> , total_duration)
+        </div>
+        <ul>
+            <li><span class="inline-code">input()</span> always returns a <strong>string</strong>. To add it to a number, we must convert it with <span class="inline-code">int()</span>.</li>
+            <li><span class="inline-code">row_all[2]</span> – assuming <span class="inline-code">row_all</span> is a list (similar to <span class="inline-code">row</span>) and the third element (index 2) is a number.</li>
+            <li>We then print the total duration.</li>
+        </ul>
+
+        <!-- ========================================================== -->
+        <h2><i class="fas fa-wrench"></i> 2. Fixing and Improving the Code</h2>
+        <p>Let's write a corrected, working version that uses best practices.</p>
+        <div class="code-block">
+            <span class="comment"># A complete working example</span><br><br>
+            <span class="comment"># 1. Define a row of data (like a task)</span><br>
+            row = [<span class="string">'T3'</span>, <span class="string">'28-07-2026'</span>, <span class="number">0</span>, <span class="number">6.0</span>]<br><br>
+            <span class="comment"># 2. Additional duration from user (string -> int)</span><br>
+            additional_duration = <span class="builtin">input</span>(<span class="string">"Enter Additional Duration (days): "</span>)<br>
+            additional_days = <span class="builtin">int</span>(additional_duration)<br><br>
+            <span class="comment"># 3. Calculate total – using row[2] (the third element)</span><br>
+            total_duration = row[<span class="number">2</span>] + additional_days<br><br>
+            <span class="comment"># 4. Print the result</span><br>
+            <span class="builtin">print</span>(<span class="string">f'Total Duration is: {total_duration}'</span>)<br><br>
+            <span class="comment"># 5. (Optional) Loop through the row to find a specific value</span><br>
+            start_index = <span class="number">0</span><br>
+            <span class="keyword">while</span> start_index < <span class="builtin">len</span>(row):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;unum = row[start_index]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> unum == <span class="number">1000</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">"Found 1000 – exiting."</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">break</span>   <span class="comment"># exit loop, not the whole program</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;start_index += <span class="number">1</span>   <span class="comment"># shorthand for start_index = start_index + 1</span>
+        </div>
+        <div class="highlight-box">
+            <i class="fas fa-check-circle"></i>
+            <strong>Key improvements:</strong> Added the missing colon, used <span class="inline-code">break</span> instead of <span class="inline-code">exit()</span> for better control, and used f‑string for cleaner print.
+        </div>
+
+        <!-- ========================================================== -->
+        <h2><i class="fas fa-code-branch"></i> 3. Looping &amp; Decision Making – for, if-else, while, do-while</h2>
+
+        <h3><i class="fas fa-arrow-right"></i> 3.1 The <span class="inline-code">for</span> Loop – Iterating Over Items</h3>
+        <p>
+            Python's <span class="inline-code">for</span> loop is designed to iterate directly over a <strong>sequence</strong>
+            (like a list, tuple, string, or range). You don't need an index variable.
+        </p>
+        <div class="code-block">
+            row = [<span class="string">'T3'</span>, <span class="string">'28-07-2026'</span>, <span class="number">0</span>, <span class="number">6.0</span>]<br><br>
+            <span class="comment"># 'val' takes the value of each element in order</span><br>
+            <span class="keyword">for</span> val <span class="keyword">in</span> row:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"Current value: {val}"</span>)<br><br>
+            <span class="comment"># Output:</span><br>
+            <span class="comment"># Current value: T3</span><br>
+            <span class="comment"># Current value: 28-07-2026</span><br>
+            <span class="comment"># Current value: 0</span><br>
+            <span class="comment"># Current value: 6.0</span>
+        </div>
+        <ul>
+            <li><strong>Cleaner &amp; safer:</strong> No manual index management – avoids "off‑by‑one" errors.</li>
+            <li><strong>Works with any iterable:</strong> Strings, dictionaries, files, etc.</li>
+        </ul>
+
+        <h3><i class="fas fa-code"></i> 3.2 <span class="inline-code">if-else</span> Conditions – Making Decisions</h3>
+        <p>
+            Use <span class="inline-code">if</span>, <span class="inline-code">elif</span> (else if), and <span class="inline-code">else</span>
+            to control the flow of your program based on conditions.
+        </p>
+        <div class="code-block">
+            <span class="keyword">for</span> val <span class="keyword">in</span> row:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> val == <span class="number">1000</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">"Found the sentinel value 1000!"</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">elif</span> val == <span class="number">0</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">"Zero duration detected."</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"Value is {val}"</span>)
+        </div>
+        <ul>
+            <li><span class="inline-code">if</span> checks the first condition.</li>
+            <li><span class="inline-code">elif</span> lets you check multiple conditions.</li>
+            <li><span class="inline-code">else</span> runs if none of the above are true.</li>
+        </ul>
+
+        <h3><i class="fas fa-balance-scale"></i> 3.3 <span class="inline-code">for</span> vs <span class="inline-code">while</span> – When to Use Which</h3>
+        <ul>
+            <li>
+                <strong>Use <span class="inline-code">for</span> when:</strong>
+                <ul>
+                    <li>You know the number of iterations upfront (e.g., iterating over a list, range, or string).</li>
+                    <li>You want to process each element in a collection without managing an index.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Use <span class="inline-code">while</span> when:</strong>
+                <ul>
+                    <li>The number of iterations is <strong>unknown</strong> and depends on a dynamic condition (e.g., waiting for user input, reading a file until EOF, or running until a sensor value changes).</li>
+                    <li>You need an infinite loop that breaks on a specific event.</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="highlight-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Rule of thumb:</strong> In Python, <span class="inline-code">for</span> is preferred 80% of the time because it's more readable and less error‑prone. Only use <span class="inline-code">while</span> when you truly need an indefinite loop.
+        </div>
+
+        <h3><i class="fas fa-sync-alt"></i> 3.4 <span class="inline-code">do-while</span> / <span class="inline-code">do-until</span> – Does Python Have Them?</h3>
+        <p>
+            <strong>No.</strong> Python does <strong>not</strong> have a built‑in <span class="inline-code">do-while</span>
+            or <span class="inline-code">do-until</span> loop. This is a deliberate design choice – Python's philosophy
+            prioritizes readability and explicit flow control.
+        </p>
+        <p>However, you can <strong>simulate</strong> a <span class="inline-code">do-while</span> (execute at least once) using:</p>
+        <div class="code-block">
+            <span class="comment"># Simulate do-while: run code at least once, then check condition</span><br>
+            <span class="keyword">while</span> <span class="builtin">True</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># This block always runs at least once</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;user_input = <span class="builtin">input</span>(<span class="string">"Enter a number (or 'exit'): "</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> user_input == <span class="string">'exit'</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">break</span>   <span class="comment"># exit the loop</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"You entered: {user_input}"</span>)
+        </div>
+        <ul>
+            <li>
+                <strong><span class="inline-code">do-while</span> pattern:</strong> Use <span class="inline-code">while True</span>
+                and place the exit condition at the end with <span class="inline-code">break</span>.
+            </li>
+            <li>
+                <strong><span class="inline-code">do-until</span> pattern:</strong> This is the same as <span class="inline-code">do-while</span>
+                but with a negation. Just use <span class="inline-code">if condition: break</span> when you want to stop.
+            </li>
+        </ul>
+        <div class="warning-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Remember:</strong> In languages like C or Java, <span class="inline-code">do-while</span> checks the condition
+            <em>after</em> the loop body. Python's <span class="inline-code">while</span> checks it <em>before</em>.
+            So always use the <span class="inline-code">while True</span> + <span class="inline-code">break</span> pattern when you need an "at‑least‑once" loop.
+        </div>
+
+        <!-- ========================================================== -->
+        <h2><i class="fas fa-cloud"></i> 4. Beyond Python – Frontend + Backend Integration</h2>
+        <p>
+            The session also touched upon an HTML page with JavaScript that sends data to a server.
+            This is a typical <strong>client‑server</strong> architecture. Let's break it down.
+        </p>
+
+        <h3><i class="fas fa-html5"></i> 4.1 The HTML Frontend</h3>
+        <div class="code-block">
+            &lt;table&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;p&gt; Enter Task Name &lt;/p&gt;&lt;/td&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;input type="input" id="taskname" /&gt;&lt;/td&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;input type="submit" id="btnsubmit" onclick="sendToServer()" /&gt;&lt;/td&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br>
+            &lt;/table&gt;
+        </div>
+        <ul>
+            <li>This creates a simple form with a text input and a submit button.</li>
+            <li>When clicked, <span class="inline-code">sendToServer()</span> JavaScript function is called.</li>
+        </ul>
+
+        <h3><i class="fab fa-js"></i> 4.2 The JavaScript Client</h3>
+        <div class="code-block">
+            <span class="keyword">function</span> <span class="func">sendToServer</span>() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 1. Build HTTP Request (GET, POST, etc.)</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 2. Set headers (authentication, content-type)</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 3. Send to a backend URL (Web API / Web Service)</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 4. Handle the response (parse JSON, update UI)</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;saveToDB(); <span class="comment">// or save to file, send email, etc.</span><br>
+            }
+        </div>
+        <ul>
+            <li>This function would typically use <span class="inline-code">fetch()</span> or <span class="inline-code">XMLHttpRequest</span> to communicate with a backend.</li>
+            <li>Common actions: save to a database, write to a file, send an email, or upload to SharePoint.</li>
+        </ul>
+
+        <h3><i class="fas fa-server"></i> 4.3 The Backend (Python / Node / etc.)</h3>
+        <p>
+            The backend receives the request, processes the data, and performs actions like:
+        </p>
+        <ul>
+            <li><strong>Save to a text file</strong> – using Python's <span class="inline-code">open()</span> and <span class="inline-code">write()</span>.</li>
+            <li><strong>Insert into a database</strong> – like Oracle, SQL Server, or PostgreSQL.</li>
+            <li><strong>Send an email</strong> – using <span class="inline-code">smtplib</span>.</li>
+            <li><strong>Upload to SharePoint</strong> – via Microsoft Graph API or SharePoint REST API.</li>
+        </ul>
+        <div class="highlight-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Takeaway:</strong> The frontend captures user input; the backend processes and stores it. This is the foundation of most web applications.
+        </div>
+
+        <!-- ========================================================== -->
+        <h2><i class="fas fa-graduation-cap"></i> 5. Key Takeaways from Today's Session</h2>
+        <ul>
+            <li><strong>Variables</strong> store data – no type declaration needed.</li>
+            <li><strong>Lists</strong> hold ordered collections – accessed by index or iterated with <span class="inline-code">for</span>.</li>
+            <li><strong><span class="inline-code">while</span> loops</strong> are great when you don't know how many times to loop.</li>
+            <li><strong><span class="inline-code">for</span> loops</strong> are cleaner and safer when iterating over known collections.</li>
+            <li><strong><span class="inline-code">if-elif-else</span></strong> lets you branch your code based on conditions.</li>
+            <li><strong>Python doesn't have <span class="inline-code">do-while</span></strong> – use <span class="inline-code">while True</span> + <span class="inline-code">break</span> to simulate it.</li>
+            <li><strong><span class="inline-code">input()</span></strong> reads user input as a string; convert to <span class="inline-code">int</span> or <span class="inline-code">float</span> for arithmetic.</li>
+            <li><strong>Type conversion</strong> is essential when mixing data types.</li>
+            <li><strong>Frontend + Backend</strong> work together to create complete applications.</li>
+        </ul>
+
+        <!-- ========================================================== -->
+        <h2><i class="fas fa-code"></i> 6. Practice Exercise</h2>
+        <p>Try to extend the program yourself:</p>
+        <ol>
+            <li>Create a list of multiple tasks (like 5 rows).</li>
+            <li>Use a <span class="inline-code">for</span> loop to iterate through all tasks and print each task's duration.</li>
+            <li>Use an <span class="inline-code">if-else</span> to check if the duration is < 0 and print a warning.</li>
+            <li>Use a <span class="inline-code">while</span> loop to keep asking the user for a task name until they type "quit".</li>
+        </ol>
+        <div class="highlight-box">
+            <i class="fas fa-rocket"></i>
+            <strong>Challenge:</strong> Combine <span class="inline-code">for</span> and <span class="inline-code">if-else</span> to find all tasks that start with the letter 'T' and print them.
+        </div>
+
+        <!-- ========================================================== -->
+        <div class="footer">
+            <i class="fab fa-python"></i> Python Training – July 29, 2026 &nbsp;·&nbsp;
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i> Keep coding!
+        </div>
+
+    </div>
+</body>
+</html>
