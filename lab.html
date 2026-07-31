@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P6 Python Lab – Primavera Themed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #f4f8fc;
+            color: #1a2a3a;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06);
+            padding: 2.8rem 3rem;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #0b1a33;
+            border-bottom: 2px solid #eaf0f6;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 i { color: #3776ab; margin-right: 12px; }
+        .subtitle { color: #4a637e; margin-bottom: 2rem; font-size: 1.05rem; }
+        .subtitle i { color: #3776ab; }
+        .info-box {
+            background: #eaf3fa;
+            border-left: 5px solid #3776ab;
+            border-radius: 12px;
+            padding: 1.2rem 1.6rem;
+            margin-bottom: 2rem;
+        }
+        .info-box i { color: #3776ab; margin-right: 10px; }
+        .warning-box {
+            background: #fef6e6;
+            border-left: 5px solid #e6a020;
+            border-radius: 12px;
+            padding: 1rem 1.6rem;
+            margin: 1.2rem 0;
+        }
+        .warning-box i { color: #e6a020; margin-right: 10px; }
+        .exercise {
+            background: #fafcff;
+            border: 1px solid #e2e9f2;
+            border-radius: 18px;
+            padding: 1.8rem 2rem;
+            margin: 2.2rem 0;
+            transition: 0.2s;
+        }
+        .exercise:hover { border-color: #b8cce0; }
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 0.8rem;
+        }
+        .exercise-number {
+            background: #0b1a33;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+        }
+        .exercise h2 {
+            font-size: 1.5rem;
+            color: #0b1a33;
+            margin: 0;
+        }
+        .exercise h2 i { color: #3776ab; margin-right: 8px; }
+        .goal {
+            background: #f1f7fe;
+            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+            margin: 0.6rem 0 1rem 0;
+            font-weight: 500;
+            color: #1a3455;
+        }
+        .goal i { color: #3776ab; margin-right: 8px; }
+        .code-block {
+            background: #0d1b2a;
+            color: #e3eaf0;
+            border-radius: 14px;
+            padding: 1.2rem 1.8rem;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            border-left: 4px solid #3776ab;
+        }
+        .code-block .comment { color: #6e8ba3; }
+        .code-block .keyword { color: #c792ea; }
+        .code-block .string { color: #c3e88d; }
+        .code-block .func { color: #82aaff; }
+        .code-block .builtin { color: #f78c6c; }
+        .code-block .number { color: #f78c6c; }
+        .code-block .op { color: #89ddff; }
+        .output-block {
+            background: #e9eef4;
+            border-radius: 10px;
+            padding: 0.8rem 1.4rem;
+            margin: 0.6rem 0 1rem 0;
+            font-family: monospace;
+            font-size: 0.88rem;
+            color: #1d3b5c;
+            border-left: 4px solid #2e7d32;
+        }
+        .output-block i { color: #2e7d32; margin-right: 8px; }
+        .challenge-box {
+            background: #f4f0fa;
+            border-radius: 12px;
+            padding: 1rem 1.6rem;
+            margin: 1rem 0 0.5rem 0;
+            border-left: 4px solid #7c4dff;
+        }
+        .challenge-box i { color: #7c4dff; margin-right: 8px; }
+        .challenge-box strong { color: #4a2c8a; }
+        .inline-code {
+            background: #e9eef4;
+            color: #1d3b5c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .tip-box {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 0.7rem 1.4rem;
+            margin: 0.8rem 0;
+            border-left: 4px solid #2e7d32;
+        }
+        .tip-box i { color: #2e7d32; margin-right: 8px; }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eaf0f6;
+            text-align: center;
+            color: #4a637e;
+            font-size: 0.9rem;
+        }
+        .footer i { color: #3776ab; }
+        @media (max-width: 700px) {
+            .container { padding: 1.5rem 1.2rem; }
+            h1 { font-size: 1.8rem; }
+            .exercise { padding: 1.2rem 1.2rem; }
+            .exercise h2 { font-size: 1.2rem; }
+            .code-block { font-size: 0.78rem; padding: 0.9rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <h1><i class="fas fa-tasks"></i> P6 Python Lab</h1>
+        <div class="subtitle">
+            <i class="fas fa-arrow-right"></i> Primavera P6 themed exercises using
+            <a href="https://onecompiler.com/python" target="_blank" style="color:#3776ab;font-weight:600;">OneCompiler</a>
+            &nbsp;·&nbsp; <i class="fas fa-hard-hat"></i> Projects, WBS, Resources &amp; Scheduling
+        </div>
+
+        <div class="info-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Why this matters:</strong> You handle Primavera P6 daily. Instead of abstract examples, we will use
+            <strong>Projects, WBS, Tasks, Durations, % Complete, and Resources</strong> to learn Python. You'll see how 
+            Python can automate your scheduling reports.
+            <br><br>
+            <i class="fas fa-exclamation-triangle" style="color:#e6a020;"></i>
+            <strong>Note:</strong> We are <em>not</em> connecting to the P6 database yet. We are learning Python syntax 
+            using P6-like data structures (lists &amp; dictionaries). This is the first step toward automation!
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- EXERCISE 1 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <span class="exercise-number">01</span>
+                <h2><i class="fas fa-folder-tree"></i> Project &amp; WBS Dictionary</h2>
+            </div>
+            <div class="goal">
+                <i class="fas fa-bullseye"></i> <strong>Goal:</strong> Store a Project with WBS details using a Python dictionary.
+            </div>
+            <p><strong>Step 1:</strong> Type this code. Notice how we use a <span class="inline-code">dict</span> (curly braces) to store structured data.</p>
+            <div class="code-block">
+                <span class="comment"># P6 Exercise 1: Project &amp; WBS Definition</span><br>
+                project = {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"name"</span>: <span class="string">"Metro Rail Phase 2"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"id"</span>: <span class="string">"P-1001"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"wbs"</span>: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"1.1"</span>: <span class="string">"Civil Works"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"1.2"</span>: <span class="string">"Track Laying"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"1.3"</span>: <span class="string">"Station Electrification"</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }<br><br>
+                <span class="comment"># Print project details</span><br>
+                <span class="builtin">print</span>(<span class="string">"Project Name:"</span>, project[<span class="string">"name"</span>])<br>
+                <span class="builtin">print</span>(<span class="string">"WBS Elements:"</span>)<br>
+                <span class="keyword">for</span> code, name <span class="keyword">in</span> project[<span class="string">"wbs"</span>].items():<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"  - {code}: {name}"</span>)
+            </div>
+            <div class="output-block">
+                <i class="fas fa-terminal"></i> <strong>Expected output:</strong><br>
+                Project Name: Metro Rail Phase 2<br>
+                WBS Elements:<br>
+                &nbsp;&nbsp;- 1.1: Civil Works<br>
+                &nbsp;&nbsp;- 1.2: Track Laying<br>
+                &nbsp;&nbsp;- 1.3: Station Electrification
+            </div>
+            <div class="challenge-box">
+                <i class="fas fa-comment-dots"></i>
+                <strong>✏️ Challenge – Add a WBS:</strong><br>
+                Add a new WBS element <span class="inline-code">"1.4"</span> with the name <span class="inline-code">"Testing &amp; Commissioning"</span>.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- EXERCISE 2 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <span class="exercise-number">02</span>
+                <h2><i class="fas fa-clipboard-list"></i> Task Status &amp; Filtering</h2>
+            </div>
+            <div class="goal">
+                <i class="fas fa-bullseye"></i> <strong>Goal:</strong> Create a list of tasks and filter them by status (Open, InProgress, Completed).
+            </div>
+            <p><strong>Step 1:</strong> Type this code. Each task is a dictionary with typical P6 fields.</p>
+            <div class="code-block">
+                <span class="comment"># P6 Exercise 2: Task Status List</span><br>
+                tasks = [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-101"</span>, <span class="string">"name"</span>: <span class="string">"Site Clearance"</span>, <span class="string">"status"</span>: <span class="string">"Completed"</span>, <span class="string">"duration"</span>: <span class="number">3.0</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-102"</span>, <span class="string">"name"</span>: <span class="string">"Foundation Pour"</span>, <span class="string">"status"</span>: <span class="string">"InProgress"</span>, <span class="string">"duration"</span>: <span class="number">5.0</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-103"</span>, <span class="string">"name"</span>: <span class="string">"Steel Erection"</span>, <span class="string">"status"</span>: <span class="string">"Open"</span>, <span class="string">"duration"</span>: <span class="number">8.0</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-104"</span>, <span class="string">"name"</span>: <span class="string">"Roof Installation"</span>, <span class="string">"status"</span>: <span class="string">"Open"</span>, <span class="string">"duration"</span>: <span class="number">4.0</span>}<br>
+                ]<br><br>
+                <span class="comment"># Filter and print only 'Open' tasks</span><br>
+                <span class="builtin">print</span>(<span class="string">"Open Tasks:"</span>)<br>
+                <span class="keyword">for</span> task <span class="keyword">in</span> tasks:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> task[<span class="string">"status"</span>] == <span class="string">"Open"</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"  - {task['id']}: {task['name']} ({task['duration']} days)"</span>)
+            </div>
+            <div class="output-block">
+                <i class="fas fa-terminal"></i> <strong>Expected output:</strong><br>
+                Open Tasks:<br>
+                &nbsp;&nbsp;- T-103: Steel Erection (8.0 days)<br>
+                &nbsp;&nbsp;- T-104: Roof Installation (4.0 days)
+            </div>
+            <div class="challenge-box">
+                <i class="fas fa-comment-dots"></i>
+                <strong>✏️ Challenge – Add a status:</strong><br>
+                Change the filter to print <strong>InProgress</strong> tasks instead. 
+                Then, add an <span class="inline-code">elif</span> to also print how many <strong>Completed</strong> tasks exist.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- EXERCISE 3 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <span class="exercise-number">03</span>
+                <h2><i class="fas fa-percentage"></i> % Complete &amp; Remaining Duration</h2>
+            </div>
+            <div class="goal">
+                <i class="fas fa-bullseye"></i> <strong>Goal:</strong> Calculate remaining duration based on % Complete. This is core P6 logic.
+            </div>
+            <p><strong>Step 1:</strong> Type this code. We calculate <span class="inline-code">remaining_duration</span>.</p>
+            <div class="code-block">
+                <span class="comment"># P6 Exercise 3: Remaining Duration Calculator</span><br>
+                tasks = [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-201"</span>, <span class="string">"name"</span>: <span class="string">"Excavation"</span>, <span class="string">"duration"</span>: <span class="number">10.0</span>, <span class="string">"pct_complete"</span>: <span class="number">100</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-202"</span>, <span class="string">"name"</span>: <span class="string">"Piling"</span>, <span class="string">"duration"</span>: <span class="number">6.0</span>, <span class="string">"pct_complete"</span>: <span class="number">50</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-203"</span>, <span class="string">"name"</span>: <span class="string">"Concrete Deck"</span>, <span class="string">"duration"</span>: <span class="number">8.0</span>, <span class="string">"pct_complete"</span>: <span class="number">0</span>}<br>
+                ]<br><br>
+                <span class="keyword">for</span> task <span class="keyword">in</span> tasks:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;remaining = task[<span class="string">"duration"</span>] * (<span class="number">1</span> - task[<span class="string">"pct_complete"</span>] / <span class="number">100</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"{task['id']}: {task['pct_complete']}% done, Remaining: {remaining:.1f} days"</span>)
+            </div>
+            <div class="output-block">
+                <i class="fas fa-terminal"></i> <strong>Expected output:</strong><br>
+                T-201: 100% done, Remaining: 0.0 days<br>
+                T-202: 50% done, Remaining: 3.0 days<br>
+                T-203: 0% done, Remaining: 8.0 days
+            </div>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i> <strong>P6 Insight:</strong> In Primavera, <span class="inline-code">Remaining Duration = Original Duration * (1 - % Complete)</span>. This is exactly what we just coded!
+            </div>
+            <div class="challenge-box">
+                <i class="fas fa-comment-dots"></i>
+                <strong>✏️ Challenge – Add logic:</strong><br>
+                Add an <span class="inline-code">if</span> statement: If the task is 100% complete, print <span class="inline-code">"✅ Completed"</span>. 
+                If it's between 1 and 99%, print <span class="inline-code">"⏳ In Progress"</span>. Otherwise, print <span class="inline-code">"⏹️ Not Started"</span>.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- EXERCISE 4 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <span class="exercise-number">04</span>
+                <h2><i class="fas fa-users"></i> Resource Assignments &amp; Cost Rollup</h2>
+            </div>
+            <div class="goal">
+                <i class="fas fa-bullseye"></i> <strong>Goal:</strong> Loop through resources assigned to a task and calculate total assignment cost.
+            </div>
+            <p><strong>Step 1:</strong> Type this code. This simulates the P6 Resource Assignment table.</p>
+            <div class="code-block">
+                <span class="comment"># P6 Exercise 4: Resource Cost Rollup</span><br>
+                task_resources = [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"resource_name"</span>: <span class="string">"Crane Operator"</span>, <span class="string">"rate"</span>: <span class="number">150.0</span>, <span class="string">"hours"</span>: <span class="number">40</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"resource_name"</span>: <span class="string">"Steel Fitter"</span>, <span class="string">"rate"</span>: <span class="number">120.0</span>, <span class="string">"hours"</span>: <span class="number">80</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"resource_name"</span>: <span class="string">"Supervisor"</span>, <span class="string">"rate"</span>: <span class="number">200.0</span>, <span class="string">"hours"</span>: <span class="number">20</span>}<br>
+                ]<br><br>
+                total_cost = <span class="number">0</span><br>
+                <span class="keyword">for</span> res <span class="keyword">in</span> task_resources:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;cost = res[<span class="string">"rate"</span>] * res[<span class="string">"hours"</span>]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;total_cost = total_cost + cost<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"{res['resource_name']}: ${cost:,.2f}"</span>)<br><br>
+                <span class="builtin">print</span>(<span class="string">"-------------------------"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"Total Assignment Cost: ${total_cost:,.2f}"</span>)
+            </div>
+            <div class="output-block">
+                <i class="fas fa-terminal"></i> <strong>Expected output:</strong><br>
+                Crane Operator: $6,000.00<br>
+                Steel Fitter: $9,600.00<br>
+                Supervisor: $4,000.00<br>
+                -------------------------<br>
+                Total Assignment Cost: $19,600.00
+            </div>
+            <div class="challenge-box">
+                <i class="fas fa-comment-dots"></i>
+                <strong>✏️ Challenge – Add a resource:</strong><br>
+                Add a new resource: <span class="inline-code">"Safety Officer"</span> with rate <span class="inline-code">180.0</span> and <span class="inline-code">hours</span> <span class="inline-code">10</span>.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- EXERCISE 5 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <span class="exercise-number">05</span>
+                <h2><i class="fas fa-chart-pie"></i> Mini‑Project – P6 Project Dashboard</h2>
+            </div>
+            <div class="goal">
+                <i class="fas fa-bullseye"></i> <strong>Goal:</strong> Combine everything to build a summary dashboard that counts tasks by status and calculates planned vs actual.
+            </div>
+            <p><strong>Step 1:</strong> Type this complete program. This is like a lightweight P6 Activities report.</p>
+            <div class="code-block">
+                <span class="comment"># P6 Exercise 5: Project Dashboard</span><br>
+                project_activities = [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"A-001"</span>, <span class="string">"name"</span>: <span class="string">"Mobilization"</span>, <span class="string">"status"</span>: <span class="string">"Completed"</span>, <span class="string">"planned_days"</span>: <span class="number">2</span>, <span class="string">"actual_days"</span>: <span class="number">3</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"A-002"</span>, <span class="string">"name"</span>: <span class="string">"Excavation"</span>, <span class="string">"status"</span>: <span class="string">"InProgress"</span>, <span class="string">"planned_days"</span>: <span class="number">5</span>, <span class="string">"actual_days"</span>: <span class="number">4</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"A-003"</span>, <span class="string">"name"</span>: <span class="string">"Foundation"</span>, <span class="string">"status"</span>: <span class="string">"Open"</span>, <span class="string">"planned_days"</span>: <span class="number">8</span>, <span class="string">"actual_days"</span>: <span class="number">0</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"A-004"</span>, <span class="string">"name"</span>: <span class="string">"Steel Fixing"</span>, <span class="string">"status"</span>: <span class="string">"Open"</span>, <span class="string">"planned_days"</span>: <span class="number">6</span>, <span class="string">"actual_days"</span>: <span class="number">0</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"A-005"</span>, <span class="string">"name"</span>: <span class="string">"Concrete Pour"</span>, <span class="string">"status"</span>: <span class="string">"InProgress"</span>, <span class="string">"planned_days"</span>: <span class="number">3</span>, <span class="string">"actual_days"</span>: <span class="number">2</span>}<br>
+                ]<br><br>
+                <span class="comment"># Counters</span><br>
+                open_count = <span class="number">0</span><br>
+                inprog_count = <span class="number">0</span><br>
+                comp_count = <span class="number">0</span><br>
+                total_planned = <span class="number">0</span><br>
+                total_actual = <span class="number">0</span><br><br>
+                <span class="comment"># Loop through activities</span><br>
+                <span class="keyword">for</span> act <span class="keyword">in</span> project_activities:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> act[<span class="string">"status"</span>] == <span class="string">"Open"</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;open_count += <span class="number">1</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">elif</span> act[<span class="string">"status"</span>] == <span class="string">"InProgress"</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inprog_count += <span class="number">1</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comp_count += <span class="number">1</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;total_planned += act[<span class="string">"planned_days"</span>]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;total_actual += act[<span class="string">"actual_days"</span>]<br><br>
+                <span class="comment"># Print Dashboard</span><br>
+                <span class="builtin">print</span>(<span class="string">"========== PROJECT DASHBOARD =========="</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"Total Activities: {len(project_activities)}"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"  - Open       : {open_count}"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"  - InProgress : {inprog_count}"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"  - Completed  : {comp_count}"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">"--------------------------------------"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"Total Planned Days: {total_planned}"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"Total Actual Days : {total_actual}"</span>)<br><br>
+                <span class="keyword">if</span> total_actual > total_planned:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">"⚠️  Project is OVER budget on days!"</span>)<br>
+                <span class="keyword">else</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">"✅ Project is ON or UNDER budget."</span>)
+            </div>
+            <div class="output-block">
+                <i class="fas fa-terminal"></i> <strong>Expected output:</strong><br>
+                ========== PROJECT DASHBOARD ==========<br>
+                Total Activities: 5<br>
+                &nbsp;&nbsp;- Open       : 2<br>
+                &nbsp;&nbsp;- InProgress : 2<br>
+                &nbsp;&nbsp;- Completed  : 1<br>
+                --------------------------------------<br>
+                Total Planned Days: 24<br>
+                Total Actual Days : 9<br>
+                ✅ Project is ON or UNDER budget.
+            </div>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i> <strong>P6 Insight:</strong> This is exactly how Primavera calculates project rollups – looping through activities, summing planned vs actual, and classifying by status.
+            </div>
+            <div class="challenge-box">
+                <i class="fas fa-comment-dots"></i>
+                <strong>✏️ Final Challenge – Customise:</strong><br>
+                <ul style="margin:0.4rem 0 0 1.2rem;">
+                    <li>Add a new activity (e.g., <span class="inline-code">"Finishing"</span> with 4 planned days).</li>
+                    <li>Add logic to calculate <strong>Variance</strong> (Actual - Planned) and print it.</li>
+                    <li>Calculate the <strong>% Complete</strong> of the whole project (Actual / Planned * 100).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <div style="background: #e8f5e9; border-radius: 18px; padding: 1.8rem 2rem; margin-top: 2rem; border: 1px solid #a5d6a7;">
+            <h3 style="color:#1d6b3e; font-size:1.5rem; margin-bottom:0.5rem;">
+                <i class="fas fa-trophy" style="color:#f9a825;"></i> You're on the Path to P6 Automation!
+            </h3>
+            <p style="color:#1d3b5c; font-size:1.05rem;">
+                You just wrote Python code that mimics Primavera P6 logic – filtering by status, calculating remaining durations, rolling up resource costs, and building a project dashboard.
+                <br><br>
+                <i class="fas fa-check-circle" style="color:#2e7d32;"></i> These exact patterns are used to build custom reports, automate data entry, and validate schedules.
+            </p>
+            <p style="margin-top:0.8rem; color:#1d3b5c;">
+                <i class="fas fa-rocket" style="color:#3776ab;"></i>
+                <strong>Next step:</strong> Imagine replacing these hard‑coded lists with data read from a CSV export from P6 – that's your next challenge!
+            </p>
+        </div>
+
+        <div class="footer">
+            <i class="fas fa-hard-hat"></i> Primavera P6 Python Lab &nbsp;·&nbsp;
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i> 5 Exercises Completed &nbsp;·&nbsp;
+            <i class="fab fa-python"></i> Ready for automation!
+        </div>
+
+    </div>
+</body>
+</html>
