@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schedule Detective – Python Lab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f8fc;
+            color: #1a2a3a;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06);
+            padding: 2.8rem 3rem;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #0b1a33;
+            border-bottom: 2px solid #eaf0f6;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        h1 i {
+            color: #3776ab;
+            margin-right: 12px;
+        }
+        .subtitle {
+            color: #4a637e;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .subtitle i {
+            color: #3776ab;
+        }
+
+        .info-box {
+            background: #eaf3fa;
+            border-left: 5px solid #3776ab;
+            border-radius: 12px;
+            padding: 1.2rem 1.6rem;
+            margin-bottom: 2rem;
+        }
+        .info-box i {
+            color: #3776ab;
+            margin-right: 10px;
+        }
+        .info-box strong {
+            color: #0b1a33;
+        }
+
+        .step {
+            background: #fafcff;
+            border: 1px solid #e2e9f2;
+            border-radius: 18px;
+            padding: 1.6rem 1.8rem;
+            margin: 1.8rem 0;
+        }
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.6rem;
+        }
+        .step-number {
+            background: #0b1a33;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.15rem 1.2rem;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .step h2 {
+            font-size: 1.4rem;
+            color: #0b1a33;
+            margin: 0;
+        }
+        .step h2 i {
+            color: #3776ab;
+            margin-right: 8px;
+        }
+        .step p {
+            color: #1f3855;
+            margin-bottom: 0.6rem;
+        }
+        .step ul {
+            margin: 0.4rem 0 0.4rem 1.6rem;
+            color: #1f3855;
+        }
+        .step li {
+            margin-bottom: 0.3rem;
+        }
+
+        .code-block {
+            background: #0d1b2a;
+            color: #e3eaf0;
+            border-radius: 14px;
+            padding: 1.4rem 1.8rem;
+            margin: 1rem 0 1.2rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            border-left: 5px solid #3776ab;
+            position: relative;
+        }
+        .code-block .comment {
+            color: #6e8ba3;
+        }
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        .code-block .string {
+            color: #c3e88d;
+        }
+        .code-block .func {
+            color: #82aaff;
+        }
+        .code-block .builtin {
+            color: #f78c6c;
+        }
+        .code-block .number {
+            color: #f78c6c;
+        }
+        .code-block .op {
+            color: #89ddff;
+        }
+        .code-block .highlight-yellow {
+            background: rgba(255, 235, 59, 0.2);
+            border-left: 3px solid #ffeb3b;
+            padding-left: 0.5rem;
+        }
+
+        .output-block {
+            background: #e9eef4;
+            border-radius: 10px;
+            padding: 0.8rem 1.4rem;
+            margin: 0.8rem 0 0.2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: #1d3b5c;
+            border-left: 4px solid #2e7d32;
+            white-space: pre-wrap;
+        }
+        .output-block i {
+            color: #2e7d32;
+            margin-right: 8px;
+        }
+
+        .challenge-box {
+            background: #f4f0fa;
+            border-radius: 12px;
+            padding: 1rem 1.6rem;
+            margin: 1.2rem 0 0.5rem 0;
+            border-left: 4px solid #7c4dff;
+        }
+        .challenge-box i {
+            color: #7c4dff;
+            margin-right: 8px;
+        }
+        .challenge-box strong {
+            color: #4a2c8a;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background: #3776ab;
+            color: #fff;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            margin: 0.4rem 0;
+        }
+        .btn-link:hover {
+            background: #1f5a8e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(55, 118, 171, 0.25);
+        }
+        .btn-link i {
+            margin-right: 8px;
+        }
+
+        .inline-code {
+            background: #e9eef4;
+            color: #1d3b5c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .todo-box {
+            background: #fff3e0;
+            border-radius: 12px;
+            padding: 1rem 1.6rem;
+            margin: 1rem 0 0.5rem 0;
+            border-left: 4px solid #f57c00;
+        }
+        .todo-box i {
+            color: #f57c00;
+            margin-right: 8px;
+        }
+        .todo-box strong {
+            color: #bf360c;
+        }
+
+        .footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eaf0f6;
+            text-align: center;
+            color: #4a637e;
+            font-size: 0.9rem;
+        }
+        .footer i {
+            color: #3776ab;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.5rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .step {
+                padding: 1.2rem 1.2rem;
+            }
+            .step h2 {
+                font-size: 1.2rem;
+            }
+            .code-block {
+                font-size: 0.78rem;
+                padding: 0.9rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1><i class="fas fa-search"></i> Schedule Detective</h1>
+        <div class="subtitle">
+            <i class="fas fa-arrow-right"></i> Compare two Primavera task lists – find what changed.
+            &nbsp;·&nbsp; <i class="fas fa-hard-hat"></i> P6 Themed
+        </div>
+
+        <!-- ===== INFO ===== -->
+        <div class="info-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Why this matters:</strong> In Primavera P6, you constantly compare baselines, current schedules, or weekly updates.
+            This Python script does exactly that – finds <strong>added</strong>, <strong>removed</strong>, and <strong>changed</strong> tasks.
+            <br><br>
+            <i class="fas fa-clock"></i> <strong>Time:</strong> 5–10 minutes &nbsp;|&nbsp;
+            <i class="fas fa-desktop"></i> <strong>Tool:</strong> OneCompiler (no installation)
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- STEP 1 -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-number">Step 1</span>
+                <h2><i class="fas fa-external-link-alt"></i> Open OneCompiler</h2>
+            </div>
+            <p>Click the button below to open the Python editor. No login or installation required.</p>
+            <a href="https://onecompiler.com/python" target="_blank" class="btn-link">
+                <i class="fas fa-arrow-right"></i> Open OneCompiler
+            </a>
+            <p style="margin-top:0.8rem; font-size:0.95rem; color:#4a637e;">
+                <i class="fas fa-check-circle" style="color:#2e7d32;"></i> Once it loads, you'll see a code editor on the left and a "Run" button at the top.
+            </p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- STEP 2 -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-number">Step 2</span>
+                <h2><i class="fas fa-copy"></i> Copy the Starter Code</h2>
+            </div>
+            <p>Delete any existing code in the editor. Then copy and paste the <strong>starter code below</strong>.
+            <br><span style="color:#4a637e; font-size:0.95rem;"><i class="fas fa-info-circle"></i> The code for "Tasks Added" is already done for you.</span></p>
+
+            <div class="code-block">
+                <span class="comment"># ===================================================</span><br>
+                <span class="comment"># SCHEDULE DETECTIVE – Starter Code</span><br>
+                <span class="comment"># ===================================================</span><br><br>
+                <span class="comment"># Version 1 (Baseline / Old Schedule)</span><br>
+                v1_tasks = [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-101"</span>, <span class="string">"name"</span>: <span class="string">"Site Clearance"</span>, <span class="string">"duration"</span>: <span class="number">3.0</span>, <span class="string">"status"</span>: <span class="string">"Completed"</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-102"</span>, <span class="string">"name"</span>: <span class="string">"Foundation"</span>, <span class="string">"duration"</span>: <span class="number">5.0</span>, <span class="string">"status"</span>: <span class="string">"InProgress"</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-103"</span>, <span class="string">"name"</span>: <span class="string">"Steel Erection"</span>, <span class="string">"duration"</span>: <span class="number">8.0</span>, <span class="string">"status"</span>: <span class="string">"Open"</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-104"</span>, <span class="string">"name"</span>: <span class="string">"Roofing"</span>, <span class="string">"duration"</span>: <span class="number">4.0</span>, <span class="string">"status"</span>: <span class="string">"Open"</span>}<br>
+                ]<br><br>
+                <span class="comment"># Version 2 (Updated / Current Schedule)</span><br>
+                v2_tasks = [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-101"</span>, <span class="string">"name"</span>: <span class="string">"Site Clearance"</span>, <span class="string">"duration"</span>: <span class="number">3.0</span>, <span class="string">"status"</span>: <span class="string">"Completed"</span>},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-102"</span>, <span class="string">"name"</span>: <span class="string">"Foundation"</span>, <span class="string">"duration"</span>: <span class="number">5.0</span>, <span class="string">"status"</span>: <span class="string">"Completed"</span>},      <span class="comment"># Status changed!</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-103"</span>, <span class="string">"name"</span>: <span class="string">"Steel Erection"</span>, <span class="string">"duration"</span>: <span class="number">9.0</span>, <span class="string">"status"</span>: <span class="string">"InProgress"</span>}, <span class="comment"># Duration &amp; Status changed!</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="string">"id"</span>: <span class="string">"T-105"</span>, <span class="string">"name"</span>: <span class="string">"Electrical Work"</span>, <span class="string">"duration"</span>: <span class="number">6.0</span>, <span class="string">"status"</span>: <span class="string">"Open"</span>}       <span class="comment"># New task!</span><br>
+                ]<br><br>
+                <span class="comment"># Convert lists to dictionaries for easy lookup (key = task id)</span><br>
+                v1_dict = {task[<span class="string">"id"</span>]: task <span class="keyword">for</span> task <span class="keyword">in</span> v1_tasks}<br>
+                v2_dict = {task[<span class="string">"id"</span>]: task <span class="keyword">for</span> task <span class="keyword">in</span> v2_tasks}<br><br>
+                <span class="comment"># ============================================================</span><br>
+                <span class="comment"># ✅ CHALLENGE 1: TASKS ADDED (Done for you – see the pattern!)</span><br>
+                <span class="comment"># ============================================================</span><br>
+                <span class="builtin">print</span>(<span class="string">"=== TASKS ADDED ==="</span>)<br>
+                <span class="keyword">for</span> task_id <span class="keyword">in</span> v2_dict:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> task_id <span class="keyword">not</span> <span class="keyword">in</span> v1_dict:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"✅ Added: {task_id} - {v2_dict[task_id]['name']}"</span>)<br><br>
+                <span class="comment"># ============================================================</span><br>
+                <span class="comment"># 🔴 CHALLENGE 2: TASKS REMOVED (You write this!)</span><br>
+                <span class="comment"># ============================================================</span><br>
+                <span class="comment"># TODO: Write code to find tasks that are in v1_dict but NOT in v2_dict.</span><br>
+                <span class="comment"># Hint: Loop through v1_dict, check if task_id not in v2_dict.</span><br>
+                <span class="comment"># Print: f"❌ Removed: {task_id} - {v1_dict[task_id]['name']}"</span><br>
+                <span class="comment"># ============================================================</span><br><br>
+                <span class="comment"># ============================================================</span><br>
+                <span class="comment"># 🟡 CHALLENGE 3: TASKS WITH CHANGES (You write this!)</span><br>
+                <span class="comment"># ============================================================</span><br>
+                <span class="comment"># TODO: Write code to find tasks that exist in BOTH versions but have changed.</span><br>
+                <span class="comment"># Hint: Loop through v1_dict. If task_id is also in v2_dict, compare v1 and v2.</span><br>
+                <span class="comment"># If v1 != v2, print: f"🔄 Changed: {task_id} - {v1['name']}"</span><br>
+                <span class="comment"># Then check specific changes: duration and status.</span><br>
+                <span class="comment"># ============================================================</span><br><br>
+                <span class="comment"># ============================================================</span><br>
+                <span class="comment"># 📊 CHALLENGE 4: SUMMARY REPORT (You write this!)</span><br>
+                <span class="comment"># ============================================================</span><br>
+                <span class="comment"># TODO: Print a summary with:</span><br>
+                <span class="comment"># - Total tasks in V1</span><br>
+                <span class="comment"># - Total tasks in V2</span><br>
+                <span class="comment"># ============================================================</span>
+            </div>
+
+            <div class="todo-box">
+                <i class="fas fa-pencil-alt"></i>
+                <strong>Your Task:</strong> Complete the <span class="inline-code">TODO</span> sections to find:
+                <ul style="margin:0.4rem 0 0 1.2rem;">
+                    <li>🔴 <strong>Removed</strong> tasks (tasks that exist in V1 but not in V2)</li>
+                    <li>🟡 <strong>Changed</strong> tasks (tasks that exist in both but have different duration or status)</li>
+                    <li>📊 <strong>Summary</strong> (total tasks in each version)</li>
+                </ul>
+                <p style="margin-top:0.4rem;">
+                    <i class="fas fa-lightbulb" style="color:#f57c00;"></i>
+                    <strong>Hint:</strong> Look at the pattern in <strong>Challenge 1</strong> – it's the exact same logic, just reversed or with a comparison!
+                </p>
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- STEP 3 -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-number">Step 3</span>
+                <h2><i class="fas fa-play"></i> Run and Test</h2>
+            </div>
+            <p>Once you've completed the code, click <strong>"Run"</strong> at the top of OneCompiler.</p>
+            <p>If you completed all challenges correctly, you should see this output:</p>
+
+            <div class="output-block">
+<i class="fas fa-terminal"></i> <strong>Expected Output (if you completed all challenges):</strong>
+=== TASKS ADDED ===
+✅ Added: T-105 - Electrical Work
+
+=== TASKS REMOVED ===
+❌ Removed: T-104 - Roofing
+
+=== TASKS WITH CHANGES ===
+🔄 Changed: T-102 - Foundation
+   Status  : InProgress → Completed
+🔄 Changed: T-103 - Steel Erection
+   Duration: 8.0 → 9.0 days
+   Status  : Open → InProgress
+
+========== SUMMARY ==========
+Tasks in V1: 4
+Tasks in V2: 4
+            </div>
+            <p>
+                <i class="fas fa-thumbs-up" style="color:#2e7d32;"></i> <strong>Got this output?</strong> You're all set for the session!
+                <br>
+                <i class="fas fa-exclamation-triangle" style="color:#e6a020;"></i> <strong>See an error?</strong> Check your indentation and variable names.
+            </p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- EXTENSION CHALLENGES -->
+        <div class="step" style="border-left: 4px solid #7c4dff; background: #fafcff;">
+            <div class="step-header">
+                <span class="step-number" style="background:#7c4dff;">⭐</span>
+                <h2><i class="fas fa-star" style="color:#7c4dff;"></i> Extension Challenges</h2>
+            </div>
+            <p><i class="fas fa-rocket" style="color:#3776ab;"></i> <strong>Finish early?</strong> Try these extra challenges:</p>
+
+            <div class="challenge-box">
+                <i class="fas fa-plus-circle"></i>
+                <strong>Challenge A: Add a New Task</strong><br>
+                Add a new task to <span class="inline-code">v1_tasks</span> or <span class="inline-code">v2_tasks</span> and see how the output changes.
+                <br><br>
+                <em>Example:</em> Add <span class="inline-code">{"id": "T-106", "name": "Painting", "duration": 2.0, "status": "Open"}</span> to V2.
+            </div>
+
+            <div class="challenge-box">
+                <i class="fas fa-calculator"></i>
+                <strong>Challenge B: Calculate Duration Change (Advanced)</strong><br>
+                Calculate the <strong>net change</strong> in total duration between V1 and V2.
+                <br><br>
+                <strong>How:</strong>
+                <ul style="margin:0.4rem 0 0 1.2rem;">
+                    <li>Loop through tasks that exist in both versions.</li>
+                    <li>Calculate <span class="inline-code">diff = v2["duration"] - v1["duration"]</span>.</li>
+                    <li>Add all differences to get the <strong>net change</strong>.</li>
+                    <li>Print: <span class="inline-code">"Net Duration Change: +1.0 days"</span> or <span class="inline-code">"-2.0 days"</span>.</li>
+                </ul>
+                <br>
+                <strong>Why it's useful:</strong> This tells you if your overall project schedule got longer or shorter!
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- HINTS SECTION -->
+        <div class="step" style="background: #f1f7fe; border-left: 4px solid #3776ab;">
+            <div class="step-header">
+                <span class="step-number" style="background:#3776ab;">💡</span>
+                <h2><i class="fas fa-lightbulb" style="color:#3776ab;"></i> Hints for the Challenges</h2>
+            </div>
+            <p><strong>🔴 Challenge 2 – Removed Tasks:</strong></p>
+            <div class="code-block" style="margin:0.4rem 0; border-left-color:#f44336;">
+                <span class="comment"># Loop through V1, check if task ID is missing in V2</span><br>
+                <span class="keyword">for</span> task_id <span class="keyword">in</span> v1_dict:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> task_id <span class="keyword">not</span> <span class="keyword">in</span> v2_dict:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"❌ Removed: {task_id} - {v1_dict[task_id]['name']}"</span>)
+            </div>
+
+            <p style="margin-top:1rem;"><strong>🟡 Challenge 3 – Changed Tasks:</strong></p>
+            <div class="code-block" style="margin:0.4rem 0; border-left-color:#ffc107;">
+                <span class="comment"># Loop through V1, check if task exists in V2, then compare</span><br>
+                <span class="keyword">for</span> task_id <span class="keyword">in</span> v1_dict:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> task_id <span class="keyword">in</span> v2_dict:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v1 = v1_dict[task_id]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v2 = v2_dict[task_id]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> v1 <span class="op">!=</span> v2:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="builtin">print</span>(<span class="string">f"🔄 Changed: {task_id} - {v1['name']}"</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Then check specific fields</span>
+            </div>
+
+            <p style="margin-top:1rem;"><strong>📊 Challenge 4 – Summary:</strong></p>
+            <div class="code-block" style="margin:0.4rem 0; border-left-color:#4caf50;">
+                <span class="builtin">print</span>(<span class="string">f"Tasks in V1: {len(v1_tasks)}"</span>)<br>
+                <span class="builtin">print</span>(<span class="string">f"Tasks in V2: {len(v2_tasks)}"</span>)
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- FOOTER -->
+        <div class="footer">
+            <i class="fas fa-search"></i> Schedule Detective &nbsp;·&nbsp;
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i> Complete the challenges! &nbsp;·&nbsp;
+            <i class="fab fa-python"></i> Python + Primavera
+        </div>
+
+    </div>
+
+</body>
+</html>
