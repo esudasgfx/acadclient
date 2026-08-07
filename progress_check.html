@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Progress Check – Friday Session</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f8fc;
+            color: #1a2a3a;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06);
+            padding: 2.8rem 3rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #0b1a33;
+            border-bottom: 2px solid #eaf0f6;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        h1 i {
+            color: #3776ab;
+            margin-right: 12px;
+        }
+        .subtitle {
+            color: #4a637e;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+        .subtitle i {
+            color: #3776ab;
+        }
+
+        .info-box {
+            background: #eaf3fa;
+            border-left: 5px solid #3776ab;
+            border-radius: 12px;
+            padding: 1.2rem 1.6rem;
+            margin-bottom: 2rem;
+        }
+        .info-box i {
+            color: #3776ab;
+            margin-right: 10px;
+        }
+        .info-box strong {
+            color: #0b1a33;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0b1a33;
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: #3776ab;
+        }
+        .section-title .badge {
+            background: #0b1a33;
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 0.1rem 0.9rem;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        .question {
+            background: #fafcff;
+            border: 1px solid #e2e9f2;
+            border-radius: 16px;
+            padding: 1.2rem 1.6rem;
+            margin: 1rem 0;
+            transition: 0.2s;
+        }
+        .question:hover {
+            border-color: #b8cce0;
+        }
+        .question.correct {
+            border-left: 5px solid #2e7d32;
+            background: #f1f9f0;
+        }
+        .question.wrong {
+            border-left: 5px solid #c62828;
+            background: #fdf0ef;
+        }
+        .question-number {
+            font-weight: 700;
+            color: #3776ab;
+            font-size: 0.9rem;
+        }
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin: 0.3rem 0 0.6rem 0;
+            color: #0b1a33;
+        }
+        .question .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            margin: 0.4rem 0;
+        }
+        .question .options label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.3rem 0.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.98rem;
+        }
+        .question .options label:hover {
+            background: #eaf3fa;
+        }
+        .question .options input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #3776ab;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .result-feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .result-feedback .correct-text {
+            color: #2e7d32;
+        }
+        .result-feedback .wrong-text {
+            color: #c62828;
+        }
+        .result-feedback .correct-answer {
+            color: #1d6b3e;
+            font-weight: 400;
+        }
+
+        .programming-section {
+            background: #fafcff;
+            border: 1px solid #e2e9f2;
+            border-radius: 16px;
+            padding: 1.6rem 1.8rem;
+            margin: 1.5rem 0;
+        }
+        .programming-section .task-text {
+            background: #f1f7fe;
+            border-radius: 10px;
+            padding: 0.8rem 1.2rem;
+            margin: 0.6rem 0 1rem 0;
+            font-size: 0.95rem;
+        }
+        .programming-section .task-text code {
+            background: #e9eef4;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        .programming-section textarea {
+            width: 100%;
+            min-height: 200px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            padding: 1rem;
+            border: 1px solid #cbdae8;
+            border-radius: 12px;
+            background: #0d1b2a;
+            color: #e3eaf0;
+            resize: vertical;
+            line-height: 1.7;
+            tab-size: 4;
+        }
+        .programming-section textarea:focus {
+            outline: none;
+            border-color: #3776ab;
+            box-shadow: 0 0 0 3px rgba(55, 118, 171, 0.12);
+        }
+        .programming-section textarea::placeholder {
+            color: #6e8ba3;
+        }
+
+        .user-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.4rem;
+            background: #f1f7fe;
+            border-radius: 12px;
+        }
+        .user-info label {
+            font-weight: 600;
+            color: #0b1a33;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .user-info input {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid #cbdae8;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            flex: 1;
+            min-width: 180px;
+        }
+        .user-info input:focus {
+            outline: none;
+            border-color: #3776ab;
+            box-shadow: 0 0 0 3px rgba(55, 118, 171, 0.12);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.8rem;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #fff;
+            background: #3776ab;
+        }
+        .btn:hover {
+            background: #1f5a8e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(55, 118, 171, 0.25);
+        }
+        .btn-success {
+            background: #2e7d32;
+        }
+        .btn-success:hover {
+            background: #1d6b3e;
+        }
+        .btn-warning {
+            background: #e6a020;
+        }
+        .btn-warning:hover {
+            background: #c47f15;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0 1rem 0;
+            padding-top: 1rem;
+            border-top: 2px solid #eaf0f6;
+        }
+
+        .score-display {
+            background: #0b1a33;
+            color: #fff;
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            display: none;
+            text-align: center;
+        }
+        .score-display .score-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffeb3b;
+        }
+        .score-display .score-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        .score-display .score-detail {
+            margin-top: 0.3rem;
+            font-size: 0.95rem;
+            opacity: 0.7;
+        }
+
+        .download-note {
+            background: #fef6e6;
+            border-left: 5px solid #e6a020;
+            border-radius: 12px;
+            padding: 0.8rem 1.4rem;
+            margin: 1.2rem 0 0.5rem 0;
+            font-size: 0.95rem;
+            color: #5d4a1a;
+        }
+        .download-note i {
+            color: #e6a020;
+            margin-right: 8px;
+        }
+        .download-note code {
+            background: #fef0d0;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eaf0f6;
+            text-align: center;
+            color: #4a637e;
+            font-size: 0.9rem;
+        }
+        .footer i {
+            color: #3776ab;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.5rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .question {
+                padding: 1rem 1rem;
+            }
+            .programming-section {
+                padding: 1.2rem 1.2rem;
+            }
+            .programming-section textarea {
+                min-height: 150px;
+                font-size: 0.8rem;
+            }
+            .action-bar {
+                flex-direction: column;
+            }
+            .btn {
+                justify-content: center;
+            }
+            .user-info {
+                flex-direction: column;
+            }
+        }
+
+        /* Scrollable code area styling */
+        .code-block-placeholder {
+            font-family: monospace;
+            color: #6e8ba3;
+            font-size: 0.85rem;
+            padding: 0.5rem 0;
+        }
+        .highlight-yellow {
+            background: rgba(255, 235, 59, 0.2);
+            padding: 0 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+
+        <!-- ===== HEADER ===== -->
+        <h1><i class="fas fa-clipboard-check"></i> Python Progress Check</h1>
+        <div class="subtitle">
+            <i class="fas fa-arrow-right"></i> Friday Session &nbsp;·&nbsp;
+            <i class="fas fa-clock"></i> ~45 minutes &nbsp;·&nbsp;
+            <i class="fas fa-book-open"></i> Open Book
+        </div>
+
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            <strong>Instructions:</strong> Answer all 10 Multiple Choice Questions and complete the Programming Task.
+            Once you click <strong>"Submit & Check"</strong>, you'll see your score and can download your results as a <strong>.txt</strong> file.
+        </div>
+
+        <!-- ===== USER INFO ===== -->
+        <div class="user-info">
+            <label><i class="fas fa-user"></i> Your Name:</label>
+            <input type="text" id="participantName" placeholder="Enter your full name" />
+            <label><i class="fas fa-envelope"></i> Email:</label>
+            <input type="email" id="participantEmail" placeholder="your.email@company.com" />
+        </div>
+
+        <!-- ===== PART A: MCQs ===== -->
+        <div class="section-title">
+            <i class="fas fa-list-ul"></i> Part A – Multiple Choice Questions
+            <span class="badge">10 Marks</span>
+        </div>
+
+        <div id="mcqContainer"></div>
+
+        <!-- ===== PART B: PROGRAMMING ===== -->
+        <div class="section-title" style="margin-top:2.5rem;">
+            <i class="fas fa-code"></i> Part B – Programming Task
+            <span class="badge">10 Marks</span>
+        </div>
+
+        <div class="programming-section">
+            <p style="font-weight:600; color:#0b1a33;">
+                <i class="fas fa-bullseye" style="color:#3776ab;"></i>
+                Task: P6 Dashboard – Planned vs Actual Variance
+            </p>
+            <div class="task-text">
+                <p><strong>Instructions:</strong></p>
+                <ul style="margin:0.4rem 0 0 1.2rem; font-size:0.95rem;">
+                    <li>Use the provided list <code>activities</code>.</li>
+                    <li>Loop through each activity.</li>
+                    <li>Calculate <strong>variance</strong> = <code>actual - planned</code>.</li>
+                    <li>If <strong>variance > 0</strong>, print <code>[ID] – OVER budget by [variance] days</code>.</li>
+                    <li>If <strong>variance < 0</strong>, print <code>[ID] – UNDER budget by [abs(variance)] days</code>.</li>
+                    <li>If <strong>variance == 0</strong>, print <code>[ID] – On track</code>.</li>
+                    <li>At the end, print the <strong>total variance</strong> (sum of all variances).</li>
+                </ul>
+                <p style="margin-top:0.6rem;"><strong>Starting Code:</strong></p>
+                <div style="background:#0d1b2a; color:#e3eaf0; border-radius:8px; padding:0.6rem 1rem; font-family:monospace; font-size:0.85rem; line-height:1.6; overflow-x:auto;">
+                    activities = [<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;{"id": "A-001", "name": "Mobilization", "planned": 2, "actual": 3},<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;{"id": "A-002", "name": "Excavation", "planned": 5, "actual": 4},<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;{"id": "A-003", "name": "Foundation", "planned": 8, "actual": 6}<br />
+                    ]
+                </div>
+                <p style="margin-top:0.6rem; font-size:0.9rem; color:#4a637e;">
+                    <i class="fas fa-lightbulb" style="color:#e6a020;"></i>
+                    <strong>Expected Output:</strong>
+                    <br /><code style="background:#e9eef4; padding:0.1rem 0.4rem; border-radius:4px; display:inline-block; margin-top:0.2rem;">
+                        A-001 – OVER budget by 1 days<br />
+                        A-002 – UNDER budget by 1 days<br />
+                        A-003 – UNDER budget by 2 days<br />
+                        Total Variance: -2 days
+                    </code>
+                </p>
+            </div>
+
+            <label style="font-weight:600; color:#0b1a33; display:block; margin-top:0.8rem;">
+                <i class="fas fa-edit"></i> Write your Python code below:
+            </label>
+            <textarea id="codeAnswer" placeholder="# Write your Python code here&#10;# You can use the starting code provided above"></textarea>
+        </div>
+
+        <!-- ===== ACTION BUTTONS ===== -->
+        <div class="action-bar">
+            <button class="btn" id="submitBtn" onclick="submitAssessment()">
+                <i class="fas fa-check-circle"></i> Submit & Check
+            </button>
+            <button class="btn btn-success" id="downloadBtn" onclick="downloadResults()" disabled>
+                <i class="fas fa-download"></i> Download Results (.txt)
+            </button>
+            <button class="btn btn-warning" onclick="resetAll()">
+                <i class="fas fa-undo-alt"></i> Reset All
+            </button>
+        </div>
+
+        <!-- ===== SCORE DISPLAY ===== -->
+        <div class="score-display" id="scoreDisplay">
+            <div class="score-label">Your Score</div>
+            <div class="score-number" id="scoreNumber">0 / 10</div>
+            <div class="score-detail" id="scoreDetail">MCQ: 0/10 &nbsp;|&nbsp; Programming: 10/10 (Manual Check)</div>
+        </div>
+
+        <!-- ===== DOWNLOAD NOTE ===== -->
+        <div class="download-note" id="downloadNote" style="display:none;">
+            <i class="fas fa-envelope"></i>
+            <strong>After downloading:</strong> Please send this <code>.txt</code> file to
+            <strong>esudas.dhivyanathan@imagegrafix.com</strong>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer">
+            <i class="fas fa-clipboard-check"></i> Python Progress Check &nbsp;·&nbsp;
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i> Good luck!
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // DATA: 10 MCQs with correct answers
+        // ============================================================
+        const questions = [{
+            id: 1,
+            text: 'What will be the output of the following code?\n\nx = 10\nx += 3\nprint(x)',
+            options: ['10', '13', '103', 'Error'],
+            correct: 1
+        }, {
+            id: 2,
+            text: 'Which of the following is the correct way to create a List in Python?',
+            options: ['{"apple", "banana"}', '["apple", "banana"]', '("apple", "banana")', '"apple", "banana"'],
+            correct: 1
+        }, {
+            id: 3,
+            text: 'Given the dictionary project = {"id": "P-101", "status": "Open"}, how do you access the value "Open"?',
+            options: ['project[1]', 'project["status"]', 'project.status', 'project{status}'],
+            correct: 1
+        }, {
+            id: 4,
+            text: 'What is the output of this code?\n\nif 5 > 3:\n    print("A")\nelse:\n    print("B")',
+            options: ['A', 'B', 'AB', 'Nothing'],
+            correct: 0
+        }, {
+            id: 5,
+            text: 'How many times will this loop run?\n\nfor i in range(4):\n    print(i)',
+            options: ['3 times', '4 times', '5 times', 'Infinite'],
+            correct: 1
+        }, {
+            id: 6,
+            text: 'Which code will create an infinite loop?',
+            options: ['for i in range(10): break', 'while True: print("Hi")',
+                'x = 5; while x < 10: x += 1', 'for i in range(5): print(i)'
+            ],
+            correct: 1
+        }, {
+            id: 7,
+            text: 'In P6 logic, if duration = 8.0 and pct_complete = 25, what is the Remaining Duration using duration * (1 - pct/100)?',
+            options: ['2.0', '6.0', '8.0', '25.0'],
+            correct: 1
+        }, {
+            id: 8,
+            text: 'Which function is used to take input from the user in Python?',
+            options: ['print()', 'input()', 'get()', 'scan()'],
+            correct: 1
+        }, {
+            id: 9,
+            text: 'What is the length of this list: tasks = ["T-1", "T-2", "T-3", "T-4"]?',
+            options: ['3', '4', '5', '0'],
+            correct: 1
+        }, {
+            id: 10,
+            text: 'Which of the following is a valid Python comment?',
+            options: ['// This is a comment', '/* This is a comment */', '# This is a comment',
+                '<!-- This is a comment -->'
+            ],
+            correct: 2
+        }];
+
+        // Labels for options (A, B, C, D)
+        const optionLabels = ['A', 'B', 'C', 'D'];
+
+        // ============================================================
+        // RENDER MCQs
+        // ============================================================
+        function renderMCQs() {
+            const container = document.getElementById('mcqContainer');
+            let html = '';
+            questions.forEach((q, idx) => {
+                html += `
+                    <div class="question" id="q-${idx}">
+                        <div class="question-number">Q${idx+1}.</div>
+                        <div class="question-text">${q.text.replace(/\n/g, '<br>')}</div>
+                        <div class="options">
+                `;
+                q.options.forEach((opt, optIdx) => {
+                    html += `
+                        <label>
+                            <input type="radio" name="mcq_${idx}" value="${optIdx}" />
+                            <span><strong>${optionLabels[optIdx]}.</strong> ${opt}</span>
+                        </label>
+                    `;
+                });
+                html += `
+                        </div>
+                        <div class="result-feedback" id="feedback-${idx}"></div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        // SUBMIT / CHECK
+        // ============================================================
+        let submitted = false;
+        let mcqResults = [];
+        let programCode = '';
+
+        function submitAssessment() {
+            if (submitted) {
+                alert('You have already submitted. Use "Reset All" to try again.');
+                return;
+            }
+
+            // Get participant name
+            const name = document.getElementById('participantName').value.trim() || 'Anonymous';
+            const email = document.getElementById('participantEmail').value.trim() || 'Not provided';
+
+            // Check all MCQs are answered
+            let allAnswered = true;
+            for (let i = 0; i < questions.length; i++) {
+                const radios = document.querySelectorAll(`input[name="mcq_${i}"]`);
+                let checked = false;
+                radios.forEach(r => { if (r.checked) checked = true; });
+                if (!checked) {
+                    allAnswered = false;
+                    document.getElementById(`q-${i}`).style.borderLeft = '5px solid #e6a020';
+                } else {
+                    document.getElementById(`q-${i}`).style.borderLeft = '1px solid #e2e9f2';
+                }
+            }
+
+            if (!allAnswered) {
+                alert('Please answer all 10 MCQ questions before submitting.');
+                return;
+            }
+
+            // Collect answers and check
+            let correctCount = 0;
+            mcqResults = [];
+
+            for (let i = 0; i < questions.length; i++) {
+                const radios = document.querySelectorAll(`input[name="mcq_${i}"]`);
+                let selected = -1;
+                radios.forEach((r, idx) => { if (r.checked) selected = idx; });
+
+                const isCorrect = (selected === questions[i].correct);
+                if (isCorrect) correctCount++;
+
+                mcqResults.push({
+                    qIndex: i,
+                    question: questions[i].text,
+                    options: questions[i].options,
+                    selected: selected,
+                    correct: questions[i].correct,
+                    isCorrect: isCorrect,
+                    selectedLabel: selected >= 0 ? optionLabels[selected] : 'None',
+                    correctLabel: optionLabels[questions[i].correct]
+                });
+
+                // Show feedback
+                const feedback = document.getElementById(`feedback-${i}`);
+                const qDiv = document.getElementById(`q-${i}`);
+                if (isCorrect) {
+                    feedback.innerHTML = `<span class="correct-text">✅ Correct!</span>`;
+                    qDiv.className = 'question correct';
+                } else {
+                    feedback.innerHTML =
+                        `<span class="wrong-text">❌ Incorrect. Correct answer: <span class="correct-answer">${optionLabels[questions[i].correct]}. ${questions[i].options[questions[i].correct]}</span></span>`;
+                    qDiv.className = 'question wrong';
+                }
+
+                // Disable radios
+                radios.forEach(r => r.disabled = true);
+            }
+
+            // Get programming code
+            programCode = document.getElementById('codeAnswer').value.trim() || '(No code provided)';
+
+            // Show score
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            scoreDisplay.style.display = 'block';
+            document.getElementById('scoreNumber').textContent = `${correctCount} / 10`;
+            document.getElementById('scoreDetail').textContent =
+                `MCQ: ${correctCount}/10  |  Programming: 10/10 (Manual Check)`;
+
+            // Enable download
+            document.getElementById('downloadBtn').disabled = false;
+            document.getElementById('downloadNote').style.display = 'block';
+
+            // Disable submit
+            document.getElementById('submitBtn').disabled = true;
+            submitted = true;
+
+            // Scroll to score
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ============================================================
+        // DOWNLOAD RESULTS AS TXT
+        // ============================================================
+        function downloadResults() {
+            if (!submitted) {
+                alert('Please submit your assessment first.');
+                return;
+            }
+
+            const name = document.getElementById('participantName').value.trim() || 'Anonymous';
+            const email = document.getElementById('participantEmail').value.trim() || 'Not provided';
+
+            let lines = [];
+            const separator = '='.repeat(70);
+
+            // Header
+            lines.push('PYTHON PROGRESS CHECK – RESULTS');
+            lines.push(separator);
+            lines.push(`Participant Name : ${name}`);
+            lines.push(`Email           : ${email}`);
+            lines.push(`Date            : ${new Date().toLocaleDateString()}`);
+            lines.push(`Time            : ${new Date().toLocaleTimeString()}`);
+            lines.push(separator);
+            lines.push('');
+
+            // MCQs
+            lines.push('PART A – MULTIPLE CHOICE QUESTIONS (10 Marks)');
+            lines.push('-'.repeat(60));
+
+            let correctCount = 0;
+            mcqResults.forEach((r, idx) => {
+                const status = r.isCorrect ? '✅ CORRECT' : '❌ INCORRECT';
+                if (r.isCorrect) correctCount++;
+                lines.push(`Q${idx+1}. ${r.question.replace(/\n/g, ' ')}`);
+                lines.push(`   Your Answer : ${r.selectedLabel}. ${r.selected >= 0 ? r.options[r.selected] : 'None'}`);
+                if (!r.isCorrect) {
+                    lines.push(`   Correct     : ${r.correctLabel}. ${r.options[r.correct]}`);
+                }
+                lines.push(`   Status      : ${status}`);
+                lines.push('');
+            });
+
+            // Score summary
+            lines.push('-'.repeat(60));
+            lines.push(`MCQ Score : ${correctCount} / 10`);
+            lines.push('');
+
+            // Programming task
+            lines.push('PART B – PROGRAMMING TASK (10 Marks)');
+            lines.push('-'.repeat(60));
+            lines.push('Code submitted:');
+            lines.push('```');
+            lines.push(programCode);
+            lines.push('```');
+            lines.push('');
+            lines.push('-'.repeat(60));
+            lines.push('Programming Score : 10/10 (To be manually checked)');
+            lines.push('');
+
+            // Final summary
+            lines.push(separator);
+            lines.push('FINAL SCORE SUMMARY');
+            lines.push(separator);
+            lines.push(`Total MCQ Score   : ${correctCount} / 10`);
+            lines.push(`Programming Score : 10 / 10 (Manual Check)`);
+            lines.push(`TOTAL             : ${correctCount + 10} / 20`);
+            lines.push(separator);
+            lines.push('');
+
+            // Download note
+            lines.push('📧 IMPORTANT: Please send this file to:');
+            lines.push('   esudas.dhivyanathan@imagegrafix.com');
+            lines.push('');
+            lines.push('Thank you for completing the Progress Check!');
+            lines.push(separator);
+
+            // Create and download
+            const content = lines.join('\n');
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ProgressCheck_${name.replace(/\s+/g, '_')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // ============================================================
+        // RESET ALL
+        // ============================================================
+        function resetAll() {
+            if (!confirm('Reset all answers and start over?')) return;
+
+            // Reset radios
+            document.querySelectorAll('input[type="radio"]').forEach(r => {
+                r.checked = false;
+                r.disabled = false;
+            });
+
+            // Reset feedback
+            document.querySelectorAll('.result-feedback').forEach(el => el.innerHTML = '');
+
+            // Reset question styles
+            document.querySelectorAll('.question').forEach(el => {
+                el.className = 'question';
+                el.style.borderLeft = '1px solid #e2e9f2';
+            });
+
+            // Reset code
+            document.getElementById('codeAnswer').value = '';
+
+            // Reset score
+            document.getElementById('scoreDisplay').style.display = 'none';
+            document.getElementById('downloadBtn').disabled = true;
+            document.getElementById('downloadNote').style.display = 'none';
+            document.getElementById('submitBtn').disabled = false;
+
+            mcqResults = [];
+            programCode = '';
+            submitted = false;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        renderMCQs();
+
+        // Auto-save participant name to localStorage (optional)
+        document.getElementById('participantName').addEventListener('change', function() {
+            localStorage.setItem('pName', this.value);
+        });
+        document.getElementById('participantEmail').addEventListener('change', function() {
+            localStorage.setItem('pEmail', this.value);
+        });
+
+        // Load from localStorage
+        const savedName = localStorage.getItem('pName');
+        const savedEmail = localStorage.getItem('pEmail');
+        if (savedName) document.getElementById('participantName').value = savedName;
+        if (savedEmail) document.getElementById('participantEmail').value = savedEmail;
+
+        console.log('✅ Progress Check ready!');
+    </script>
+
+</body>
+</html>
