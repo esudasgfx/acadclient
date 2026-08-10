@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Primavera P6 REST API – Basics</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f8fc;
+            color: #1a2a3a;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06);
+            padding: 2.8rem 3rem;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #0b1a33;
+            border-bottom: 2px solid #eaf0f6;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        h1 i {
+            color: #3776ab;
+            margin-right: 12px;
+        }
+        .subtitle {
+            color: #4a637e;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .subtitle i {
+            color: #3776ab;
+        }
+        .info-box {
+            background: #eaf3fa;
+            border-left: 5px solid #3776ab;
+            border-radius: 12px;
+            padding: 1.2rem 1.6rem;
+            margin-bottom: 2rem;
+        }
+        .info-box i {
+            color: #3776ab;
+            margin-right: 10px;
+        }
+        .info-box strong {
+            color: #0b1a33;
+        }
+
+        .section {
+            margin: 2.2rem 0;
+        }
+        .section h2 {
+            font-size: 1.6rem;
+            color: #0b1a33;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.6rem;
+        }
+        .section h2 i {
+            color: #3776ab;
+        }
+        .section h3 {
+            font-size: 1.2rem;
+            color: #1a3455;
+            margin: 1.2rem 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h3 i {
+            color: #3776ab;
+            width: 24px;
+        }
+        .section p {
+            color: #1f3855;
+            margin-bottom: 0.6rem;
+        }
+        .section ul {
+            margin: 0.4rem 0 0.8rem 1.6rem;
+            color: #1f3855;
+        }
+        .section li {
+            margin-bottom: 0.3rem;
+        }
+
+        .code-block {
+            background: #0d1b2a;
+            color: #e3eaf0;
+            border-radius: 14px;
+            padding: 1.2rem 1.8rem;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            border-left: 5px solid #3776ab;
+        }
+        .code-block .comment {
+            color: #6e8ba3;
+        }
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        .code-block .string {
+            color: #c3e88d;
+        }
+        .code-block .func {
+            color: #82aaff;
+        }
+        .code-block .builtin {
+            color: #f78c6c;
+        }
+        .code-block .number {
+            color: #f78c6c;
+        }
+        .code-block .op {
+            color: #89ddff;
+        }
+        .code-block .highlight {
+            color: #ffcb6b;
+        }
+
+        .output-block {
+            background: #e9eef4;
+            border-radius: 10px;
+            padding: 0.8rem 1.4rem;
+            margin: 0.8rem 0 0.2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: #1d3b5c;
+            border-left: 4px solid #2e7d32;
+            white-space: pre-wrap;
+        }
+        .output-block i {
+            color: #2e7d32;
+            margin-right: 8px;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 0.7rem 1.4rem;
+            margin: 0.8rem 0;
+            border-left: 4px solid #2e7d32;
+        }
+        .tip-box i {
+            color: #2e7d32;
+            margin-right: 8px;
+        }
+
+        .warning-box {
+            background: #fef6e6;
+            border-left: 5px solid #e6a020;
+            border-radius: 10px;
+            padding: 0.8rem 1.4rem;
+            margin: 0.8rem 0;
+        }
+        .warning-box i {
+            color: #e6a020;
+            margin-right: 8px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        .table-wrap th {
+            background: #0b1a33;
+            color: #fff;
+            padding: 0.7rem 1rem;
+            text-align: left;
+        }
+        .table-wrap td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid #eaf0f6;
+            background: #fff;
+        }
+        .table-wrap tr:last-child td {
+            border-bottom: none;
+        }
+
+        .inline-code {
+            background: #e9eef4;
+            color: #1d3b5c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eaf0f6;
+            text-align: center;
+            color: #4a637e;
+            font-size: 0.9rem;
+        }
+        .footer i {
+            color: #3776ab;
+        }
+
+        .badge-method {
+            display: inline-block;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        .badge-get {
+            background: #e3f2fd;
+            color: #0d47a1;
+        }
+        .badge-post {
+            background: #e8f5e9;
+            color: #1b5e20;
+        }
+        .badge-put {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        .badge-delete {
+            background: #fce4ec;
+            color: #b71c1c;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.5rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .section h2 {
+                font-size: 1.3rem;
+            }
+            .code-block {
+                font-size: 0.78rem;
+                padding: 0.9rem 1rem;
+            }
+            .table-wrap table {
+                font-size: 0.82rem;
+            }
+            .table-wrap th,
+            .table-wrap td {
+                padding: 0.4rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1><i class="fas fa-cloud"></i> Primavera P6 REST API</h1>
+        <div class="subtitle">
+            <i class="fas fa-arrow-right"></i> Understanding Base URL, Methods, Headers, Authentication &amp; Query Parameters
+        </div>
+
+        <div class="info-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>What is this?</strong> The Primavera P6 REST API allows you to interact with P6 programmatically – read projects, create tasks, update schedules, and more – using HTTP requests.
+            <br><br>
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i>
+            We'll explore <strong>Login</strong> (POST) and <strong>Read Projects</strong> (GET) as examples.
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 1: BASE URL -->
+        <div class="section">
+            <h2><i class="fas fa-link"></i> 1. The Base URL</h2>
+            <p>
+                Every API request starts with a <strong>Base URL</strong>. This is the root address of the P6 REST API server.
+            </p>
+            <div class="code-block">
+                https://primavera.iges.in:18206/p6ws/restapi/
+            </div>
+            <ul>
+                <li><span class="inline-code">https://</span> – The protocol (secure HTTP).</li>
+                <li><span class="inline-code">primavera.iges.in</span> – The server hostname.</li>
+                <li><span class="inline-code">:18206</span> – The port number (optional, but required here).</li>
+                <li><span class="inline-code">/p6ws/restapi/</span> – The API endpoint path.</li>
+            </ul>
+            <p>
+                Different <strong>methods</strong> (also called <strong>endpoints</strong>) are appended to this base URL.
+            </p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 2: HTTP METHODS -->
+        <div class="section">
+            <h2><i class="fas fa-arrows-alt-h"></i> 2. HTTP Methods – What They Do</h2>
+            <p>
+                HTTP methods (also called verbs) tell the server what action you want to perform.
+            </p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Purpose</th>
+                            <th>In P6 Context</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge-method badge-get">GET</span></td>
+                            <td>Read / Retrieve data</td>
+                            <td>Get list of projects, tasks, resources</td>
+                            <td><code>/project</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-post">POST</span></td>
+                            <td>Create new data</td>
+                            <td>Login, create a project, add a task</td>
+                            <td><code>/login</code> (authentication)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-put">PUT</span></td>
+                            <td>Update / Replace existing data</td>
+                            <td>Update project details, task status</td>
+                            <td><code>/project/{id}</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-method badge-delete">DELETE</span></td>
+                            <td>Remove data</td>
+                            <td>Delete a project or task</td>
+                            <td><code>/project/{id}</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Note:</strong> Some APIs also use <span class="inline-code">POST</span> for updates when <span class="inline-code">PUT</span> is not fully supported. Always check the API documentation.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 3: HEADERS -->
+        <div class="section">
+            <h2><i class="fas fa-heading"></i> 3. Headers – Metadata for the Request</h2>
+            <p>
+                Headers provide additional information about the request, such as authentication, content type, and expected response format.
+            </p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Header</th>
+                            <th>Purpose</th>
+                            <th>Example Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>accept</code></td>
+                            <td>What format you want the response in</td>
+                            <td><code>application/json</code> or <code>*/*</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>username</code></td>
+                            <td>P6 username (for login)</td>
+                            <td><code>your-username</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>password</code></td>
+                            <td>P6 password (for login)</td>
+                            <td><code>your-password</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Content-Type</code></td>
+                            <td>Format of the data you are sending (for POST/PUT)</td>
+                            <td><code>application/json</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Authorization</code></td>
+                            <td>Token or credentials (after login)</td>
+                            <td><code>Bearer &lt;token&gt;</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Important:</strong> After a successful login, the API may return a <strong>session token</strong> or <strong>cookie</strong>.
+                This must be included in subsequent requests for authentication.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 4: AUTHENTICATION – LOGIN (POST) -->
+        <div class="section">
+            <h2><i class="fas fa-sign-in-alt"></i> 4. Authentication – Login (POST)</h2>
+            <p>
+                The <span class="inline-code">/login</span> method is used to authenticate your username and password with the P6 server.
+            </p>
+
+            <h3><i class="fas fa-construction"></i> URL Structure</h3>
+            <div class="code-block">
+                https://primavera.iges.in:18206/p6ws/restapi/login?DatabaseName=dbname
+            </div>
+            <ul>
+                <li><span class="inline-code">/login</span> – The <strong>method</strong> (endpoint) for authentication.</li>
+                <li><span class="inline-code">?DatabaseName=dbname</span> – A <strong>query parameter</strong> specifying which P6 database to connect to.</li>
+            </ul>
+
+            <h3><i class="fas fa-code"></i> The cURL Command</h3>
+            <div class="code-block">
+                curl -X POST <span class="string">"https://primavera.iges.in:18206/p6ws/restapi/login?DatabaseName=dbname"</span> \<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;-H <span class="string">"accept: */*"</span> \<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;-H <span class="string">"username: your-username"</span> \<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;-H <span class="string">"password: your-password"</span>
+            </div>
+
+            <h3><i class="fas fa-arrow-right"></i> Breaking It Down</h3>
+            <ul>
+                <li><span class="inline-code">-X POST</span> – The HTTP method (create/authenticate).</li>
+                <li><span class="inline-code">-H "accept: */*"</span> – Accept any response format.</li>
+                <li><span class="inline-code">-H "username: your-username"</span> – Username header.</li>
+                <li><span class="inline-code">-H "password: your-password"</span> – Password header.</li>
+            </ul>
+
+            <div class="output-block">
+                <i class="fas fa-terminal"></i> <strong>Response:</strong><br>
+                {"message":"Login successful."}
+            </div>
+
+            <div class="tip-box">
+                <i class="fas fa-check-circle"></i>
+                <strong>Success!</strong> This means you are authenticated and can now make other API calls.
+                The server may return a <strong>session cookie</strong> or <strong>token</strong> for subsequent requests.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 5: READ PROJECTS (GET) -->
+        <div class="section">
+            <h2><i class="fas fa-folder-open"></i> 5. Read Projects (GET)</h2>
+            <p>
+                The <span class="inline-code">/project</span> method returns a list of projects. You can filter and sort the results using <strong>query parameters</strong>.
+            </p>
+
+            <h3><i class="fas fa-construction"></i> URL Structure</h3>
+            <div class="code-block">
+                https://primavera.iges.in:18206/p6ws/restapi/project?Fields=Name%2CObjectId%2CDescription%2CStartDate&amp;OrderBy=ObjectId%20desc
+            </div>
+            <ul>
+                <li><span class="inline-code">/project</span> – The <strong>method</strong> (endpoint) for projects.</li>
+                <li><span class="inline-code">?Fields=...</span> – Query parameter specifying which fields to return.</li>
+                <li><span class="inline-code">&amp;OrderBy=...</span> – Query parameter for sorting results.</li>
+            </ul>
+
+            <h3><i class="fas fa-code"></i> The cURL Command</h3>
+            <div class="code-block">
+                curl -X GET <span class="string">"https://primavera.iges.in:18206/p6ws/restapi/project?Fields=Name%2CObjectId%2CDescription%2CStartDate&amp;OrderBy=ObjectId%20desc"</span> \<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;-H <span class="string">"accept: application/json"</span>
+            </div>
+
+            <h3><i class="fas fa-search"></i> Breaking Down the Query Parameters</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Purpose</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Fields</code></td>
+                            <td>Specifies which fields (columns) to return</td>
+                            <td><code>Name,ObjectId,Description,StartDate</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>OrderBy</code></td>
+                            <td>Sort the results by a field</td>
+                            <td><code>ObjectId desc</code> (descending order)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Filter</code></td>
+                            <td>(Optional) Filter results (e.g., by status)</td>
+                            <td><code>Status eq 'Active'</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Top</code></td>
+                            <td>(Optional) Limit number of results</td>
+                            <td><code>10</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Skip</code></td>
+                            <td>(Optional) Pagination – skip N results</td>
+                            <td><code>20</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warning-box">
+                <i class="fas fa-info-circle"></i>
+                <strong>URL Encoding:</strong> In the URL, <span class="inline-code">%2C</span> is the encoded version of a comma (<span class="inline-code">,</span>), and <span class="inline-code">%20</span> is a space.
+                This is because URLs cannot contain certain special characters.
+            </div>
+
+            <h3><i class="fas fa-arrow-right"></i> Breaking It Down</h3>
+            <ul>
+                <li><span class="inline-code">-X GET</span> – The HTTP method (read).</li>
+                <li><span class="inline-code">-H "accept: application/json"</span> – Ask for JSON response format.</li>
+                <li><strong>Query Parameters (after <span class="inline-code">?</span>):</strong>
+                    <ul>
+                        <li><span class="inline-code">Fields</span> – Tells P6 which data fields to return (e.g., Name, ObjectId).</li>
+                        <li><span class="inline-code">OrderBy</span> – Sorts the results (e.g., by ObjectId in descending order).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="output-block">
+                <i class="fas fa-terminal"></i> <strong>Expected Response (JSON):</strong><br>
+                {<br>
+                &nbsp;&nbsp;"Project": [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Name": "Metro Rail Phase 2",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ObjectId": 1001,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Description": "New metro line construction",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"StartDate": "2026-01-01"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{ ... more projects ... }<br>
+                &nbsp;&nbsp;]<br>
+                }
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 6: SUMMARY -->
+        <div class="section">
+            <h2><i class="fas fa-list-check"></i> 6. Summary – What We Learned</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Explanation</th>
+                            <th>P6 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Base URL</strong></td>
+                            <td>The root address of the API server</td>
+                            <td><code>https://primavera.iges.in:18206/p6ws/restapi/</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Method / Endpoint</strong></td>
+                            <td>The specific API resource you want to interact with</td>
+                            <td><code>/login</code>, <code>/project</code>, <code>/task</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>HTTP Method</strong></td>
+                            <td>The action to perform (GET, POST, PUT, DELETE)</td>
+                            <td><code>POST</code> to login, <code>GET</code> to read projects</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Headers</strong></td>
+                            <td>Metadata like authentication, accept format</td>
+                            <td><code>username</code>, <code>password</code>, <code>accept</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Query Parameters</strong></td>
+                            <td>Filter, sort, or limit the results</td>
+                            <td><code>Fields</code>, <code>OrderBy</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Response Schema</strong></td>
+                            <td>The structure of the data returned by the API</td>
+                            <td>JSON format (different for each method)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 7: NEXT STEPS -->
+        <div class="section" style="background:#f1f7fe; border-radius:18px; padding:1.8rem 2rem; border:1px solid #dde8f2;">
+            <h2 style="margin-top:0;"><i class="fas fa-rocket"></i> 7. What's Next?</h2>
+            <p>
+                Now that you understand the basics of calling the P6 REST API, you can:
+            </p>
+            <ul>
+                <li><strong>Use Python to call these APIs</strong> – using the <span class="inline-code">requests</span> library.</li>
+                <li><strong>Explore other methods</strong> – <span class="inline-code">/task</span>, <span class="inline-code">/resource</span>, <span class="inline-code">/wbs</span>.</li>
+                <li><strong>Combine API calls</strong> – e.g., get projects, then get tasks for a specific project.</li>
+                <li><strong>Automate P6 reporting</strong> – generate schedules, dashboards, or update task status.</li>
+            </ul>
+            <div class="tip-box" style="margin-top:0.8rem;">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> Use tools like <span class="inline-code">Postman</span> or the browser's <strong>Developer Console</strong> (Network tab) to inspect API requests and responses.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <div class="footer">
+            <i class="fas fa-cloud"></i> Primavera P6 REST API &nbsp;·&nbsp;
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i> Ready for Python! &nbsp;·&nbsp;
+            <i class="fas fa-hard-hat"></i> P6 Integration
+        </div>
+
+    </div>
+</body>
+</html>

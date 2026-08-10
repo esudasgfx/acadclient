@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub & Codespaces – Beginner's Guide</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f8fc;
+            color: #1a2a3a;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06);
+            padding: 2.8rem 3rem;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #0b1a33;
+            border-bottom: 2px solid #eaf0f6;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        h1 i {
+            color: #3776ab;
+            margin-right: 12px;
+        }
+        .subtitle {
+            color: #4a637e;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .subtitle i {
+            color: #3776ab;
+        }
+        .info-box {
+            background: #eaf3fa;
+            border-left: 5px solid #3776ab;
+            border-radius: 12px;
+            padding: 1.2rem 1.6rem;
+            margin-bottom: 2rem;
+        }
+        .info-box i {
+            color: #3776ab;
+            margin-right: 10px;
+        }
+        .info-box strong {
+            color: #0b1a33;
+        }
+        .section {
+            margin: 2.2rem 0;
+        }
+        .section h2 {
+            font-size: 1.6rem;
+            color: #0b1a33;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.6rem;
+        }
+        .section h2 i {
+            color: #3776ab;
+        }
+        .section h3 {
+            font-size: 1.2rem;
+            color: #1a3455;
+            margin: 1.2rem 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h3 i {
+            color: #3776ab;
+            width: 24px;
+        }
+        .section p {
+            color: #1f3855;
+            margin-bottom: 0.6rem;
+        }
+        .section ul {
+            margin: 0.4rem 0 0.8rem 1.6rem;
+            color: #1f3855;
+        }
+        .section li {
+            margin-bottom: 0.3rem;
+        }
+        .code-block {
+            background: #0d1b2a;
+            color: #e3eaf0;
+            border-radius: 14px;
+            padding: 1.2rem 1.8rem;
+            margin: 0.8rem 0 1.2rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            border-left: 5px solid #3776ab;
+        }
+        .code-block .comment {
+            color: #6e8ba3;
+        }
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        .code-block .string {
+            color: #c3e88d;
+        }
+        .code-block .builtin {
+            color: #f78c6c;
+        }
+        .code-block .op {
+            color: #89ddff;
+        }
+        .output-block {
+            background: #e9eef4;
+            border-radius: 10px;
+            padding: 0.8rem 1.4rem;
+            margin: 0.8rem 0 0.2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: #1d3b5c;
+            border-left: 4px solid #2e7d32;
+            white-space: pre-wrap;
+        }
+        .output-block i {
+            color: #2e7d32;
+            margin-right: 8px;
+        }
+        .tip-box {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 0.7rem 1.4rem;
+            margin: 0.8rem 0;
+            border-left: 4px solid #2e7d32;
+        }
+        .tip-box i {
+            color: #2e7d32;
+            margin-right: 8px;
+        }
+        .warning-box {
+            background: #fef6e6;
+            border-left: 5px solid #e6a020;
+            border-radius: 10px;
+            padding: 0.8rem 1.4rem;
+            margin: 0.8rem 0;
+        }
+        .warning-box i {
+            color: #e6a020;
+            margin-right: 8px;
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        .table-wrap th {
+            background: #0b1a33;
+            color: #fff;
+            padding: 0.7rem 1rem;
+            text-align: left;
+        }
+        .table-wrap td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid #eaf0f6;
+            background: #fff;
+        }
+        .table-wrap tr:last-child td {
+            border-bottom: none;
+        }
+        .inline-code {
+            background: #e9eef4;
+            color: #1d3b5c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .badge-visibility {
+            display: inline-block;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        .badge-public {
+            background: #e3f2fd;
+            color: #0d47a1;
+        }
+        .badge-private {
+            background: #fce4ec;
+            color: #b71c1c;
+        }
+        .footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eaf0f6;
+            text-align: center;
+            color: #4a637e;
+            font-size: 0.9rem;
+        }
+        .footer i {
+            color: #3776ab;
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.5rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .section h2 {
+                font-size: 1.3rem;
+            }
+            .code-block {
+                font-size: 0.78rem;
+                padding: 0.9rem 1rem;
+            }
+            .table-wrap table {
+                font-size: 0.82rem;
+            }
+            .table-wrap th,
+            .table-wrap td {
+                padding: 0.4rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1><i class="fab fa-github"></i> GitHub &amp; Codespaces</h1>
+        <div class="subtitle">
+            <i class="fas fa-arrow-right"></i> Repositories, Visibility, Cloud Development &amp; File Management
+        </div>
+
+        <div class="info-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>What is this?</strong> GitHub is a platform for version control and collaboration.
+            <strong>GitHub Codespaces</strong> gives you a complete development environment in the cloud – no need to install Python on your local machine!
+            <br><br>
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i>
+            We'll cover <strong>repository visibility</strong>, setting up <strong>Codespaces</strong>, installing Python libraries, and uploading/ managing files.
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 1: WHAT IS GITHUB? -->
+        <div class="section">
+            <h2><i class="fab fa-github"></i> 1. What is GitHub?</h2>
+            <p>
+                GitHub is a platform for storing, managing, and collaborating on code. It uses <strong>Git</strong> (a version control system) to track changes to your files.
+            </p>
+            <ul>
+                <li><strong>Repository (Repo):</strong> A folder that contains all your project files (code, data, documentation).</li>
+                <li><strong>Version Control:</strong> Tracks every change made to your files, so you can go back to previous versions if needed.</li>
+                <li><strong>Collaboration:</strong> Multiple people can work on the same project simultaneously.</li>
+                <li><strong>Cloud Storage:</strong> Your code is stored safely in the cloud, accessible from anywhere.</li>
+            </ul>
+            <div class="tip-box">
+                <i class="fas fa-rocket"></i>
+                <strong>Why GitHub?</strong> It's the industry standard for developers. Learning GitHub is as important as learning Python!
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 2: REPOSITORY VISIBILITY -->
+        <div class="section">
+            <h2><i class="fas fa-eye"></i> 2. Repository Visibility – Public vs Private</h2>
+            <p>
+                When you create a repository on GitHub, you choose its <strong>visibility</strong>. This determines who can see and access your code.
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Visibility</th>
+                            <th>Who Can See It</th>
+                            <th>Use Case</th>
+                            <th>Badge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Public</strong></td>
+                            <td>Anyone on the internet</td>
+                            <td>Open-source projects, portfolios, learning examples</td>
+                            <td><span class="badge-visibility badge-public">PUBLIC</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Private</strong></td>
+                            <td>Only you and people you explicitly invite (collaborators)</td>
+                            <td>Company code, sensitive projects, work-in-progress</td>
+                            <td><span class="badge-visibility badge-private">PRIVATE</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3><i class="fas fa-cog"></i> How to Check or Change Visibility</h3>
+            <ul>
+                <li>Go to your repository on GitHub.</li>
+                <li>Click on <strong>Settings</strong> (top-right tab).</li>
+                <li>Scroll down to the <strong>Danger Zone</strong> section.</li>
+                <li>Look for <strong>Change repository visibility</strong>.</li>
+                <li>Select <span class="inline-code">Public</span> or <span class="inline-code">Private</span> and confirm.</li>
+            </ul>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Important:</strong> Once a repository is public, anyone can see your code. Always use <strong>Private</strong> for company or sensitive projects.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 3: GITHUB CODESPACES -->
+        <div class="section">
+            <h2><i class="fas fa-cloud-upload-alt"></i> 3. GitHub Codespaces – Your Cloud IDE</h2>
+            <p>
+                <strong>GitHub Codespaces</strong> is a cloud-based development environment. It gives you a fully configured IDE (like VS Code) in your browser – with Python pre-installed!
+            </p>
+            <ul>
+                <li><strong>No local installation required</strong> – just a browser and internet connection.</li>
+                <li><strong>Pre-configured environment</strong> – Python, pip, git, and essential tools are already set up.</li>
+                <li><strong>Seamless integration</strong> – directly connected to your GitHub repository.</li>
+                <li><strong>Accessible anywhere</strong> – code from any device.</li>
+            </ul>
+
+            <h3><i class="fas fa-play"></i> How to Launch Codespaces</h3>
+            <ol>
+                <li>Open your repository on GitHub.</li>
+                <li>Click the <strong>Code</strong> button (green).</li>
+                <li>Select the <strong>Codespaces</strong> tab.</li>
+                <li>Click <strong>Create codespace on main</strong> (or your preferred branch).</li>
+                <li>Wait for the environment to spin up (takes 1–2 minutes).</li>
+                <li>You'll see a fully functional VS Code editor in your browser!</li>
+            </ol>
+
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> Your Codespace is persistent – you can stop and restart it, and your files will still be there.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 4: SETTING UP YOUR ENVIRONMENT -->
+        <div class="section">
+            <h2><i class="fas fa-tools"></i> 4. Setting Up Your Environment – Installing Dependencies</h2>
+            <p>
+                When you open a Codespace, Python is already installed. However, you may need additional libraries (like <span class="inline-code">pandas</span> and <span class="inline-code">openpyxl</span>) for data processing.
+            </p>
+
+            <h3><i class="fas fa-terminal"></i> Using the Terminal</h3>
+            <p>
+                The terminal is available at the bottom of the Codespace window. You can run commands just like on your local machine.
+            </p>
+
+            <h3><i class="fas fa-boxes"></i> Installing Python Packages</h3>
+            <div class="code-block">
+                <span class="comment"># Install pandas (for data manipulation)</span><br>
+                pip install pandas<br><br>
+                <span class="comment"># Install openpyxl (to read/write Excel files)</span><br>
+                pip install openpyxl
+            </div>
+
+            <div class="output-block">
+                <i class="fas fa-terminal"></i> <strong>Expected Output (success):</strong><br>
+                Successfully installed pandas 2.0.3<br>
+                Successfully installed openpyxl 3.1.2
+            </div>
+
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> You can also create a <span class="inline-code">requirements.txt</span> file with all your dependencies and run <span class="inline-code">pip install -r requirements.txt</span> to install everything at once.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 5: WORKING WITH FILES -->
+        <div class="section">
+            <h2><i class="fas fa-file"></i> 5. Working with Files – Uploading &amp; Managing</h2>
+            <p>
+                In Codespaces, you can easily upload files (like Excel spreadsheets), create new folders, and organize your project.
+            </p>
+
+            <h3><i class="fas fa-upload"></i> Uploading Files (e.g., <span class="inline-code">.xlsx</span>)</h3>
+            <ol>
+                <li>In the Codespace file explorer (left panel), click on the <strong>Explorer</strong> icon (two sheets of paper).</li>
+                <li>You can <strong>drag and drop</strong> your Excel file directly into the file explorer.</li>
+                <li>Alternatively, click the <strong>... (More Actions)</strong> menu and select <strong>Upload</strong>.</li>
+                <li>Your file will appear in the project folder, ready to be used in your Python code.</li>
+            </ol>
+
+            <div class="warning-box">
+                <i class="fas fa-info-circle"></i>
+                <strong>Note:</strong> Excel files (<span class="inline-code">.xlsx</span>) can be read using <span class="inline-code">pandas.read_excel()</span> after installing <span class="inline-code">openpyxl</span>.
+            </div>
+
+            <h3><i class="fas fa-folder"></i> Adding Files and Folders</h3>
+            <ul>
+                <li>
+                    <strong>New Folder:</strong> Click the <strong>... (More Actions)</strong> menu in the file explorer and select <strong>New Folder</strong>. Name it (e.g., <span class="inline-code">data</span>, <span class="inline-code">scripts</span>).
+                </li>
+                <li>
+                    <strong>New File:</strong> Click the <strong>... (More Actions)</strong> menu and select <strong>New File</strong>. Name it (e.g., <span class="inline-code">analyze.py</span>).
+                </li>
+                <li>
+                    <strong>Rename / Delete:</strong> Right-click on any file or folder to rename, delete, or copy it.
+                </li>
+            </ul>
+
+            <div class="code-block">
+                <span class="comment"># Example file structure in Codespaces:</span><br>
+                my-project/<br>
+                ├── data/<br>
+                │   └── projects.xlsx  <span class="comment"># uploaded Excel file</span><br>
+                ├── scripts/<br>
+                │   └── analyze.py    <span class="comment"># your Python script</span><br>
+                └── requirements.txt  <span class="comment"># dependencies</span>
+            </div>
+
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Pro Tip:</strong> Keep your data files in a separate folder (like <span class="inline-code">data/</span>) and your Python scripts in <span class="inline-code">scripts/</span> to keep your project organized.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 6: SAVING & COMMITTING CHANGES -->
+        <div class="section">
+            <h2><i class="fas fa-save"></i> 6. Saving Changes – Commit &amp; Push</h2>
+            <p>
+                All changes you make in Codespaces are automatically saved. However, to save them permanently to your GitHub repository, you need to <strong>commit</strong> and <strong>push</strong>.
+            </p>
+            <ol>
+                <li>In the left panel, click the <strong>Source Control</strong> icon (branch with a number).</li>
+                <li>Enter a message describing your changes (e.g., <span class="inline-code">"Added Excel upload logic"</span>).</li>
+                <li>Click the <strong>Commit</strong> button (✓) to commit your changes locally.</li>
+                <li>Click the <strong>Sync Changes</strong> button (or <strong>Push</strong>) to upload your changes to GitHub.</li>
+            </ol>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> Committing regularly helps you keep track of your work and revert to previous versions if needed.
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 7: SUMMARY -->
+        <div class="section">
+            <h2><i class="fas fa-list-check"></i> 7. Summary – What We Learned</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>What It Does</th>
+                            <th>Key Takeaway</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Repository</strong></td>
+                            <td>Stores all your project files</td>
+                            <td>Always check visibility (Public vs Private)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Visibility</strong></td>
+                            <td>Controls who can see your code</td>
+                            <td>Use <strong>Private</strong> for company/sensitive projects</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Codespaces</strong></td>
+                            <td>Cloud development environment</td>
+                            <td>No local install – code from any browser</td>
+                        </tr>
+                        <tr>
+                            <td><strong>pip install</strong></td>
+                            <td>Installs Python libraries</td>
+                            <td><code>pandas</code> &amp; <code>openpyxl</code> for Excel data</td>
+                        </tr>
+                        <tr>
+                            <td><strong>File Management</strong></td>
+                            <td>Upload, create, organize files/folders</td>
+                            <td>Drag &amp; drop <code>.xlsx</code> files into Codespaces</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Commit &amp; Push</strong></td>
+                            <td>Save changes to GitHub</td>
+                            <td>Commit with a message, then push to sync</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- SECTION 8: NEXT STEPS -->
+        <div class="section" style="background:#f1f7fe; border-radius:18px; padding:1.8rem 2rem; border:1px solid #dde8f2;">
+            <h2 style="margin-top:0;"><i class="fas fa-rocket"></i> 8. What's Next?</h2>
+            <p>
+                Now that your Codespace is ready, you can:
+            </p>
+            <ul>
+                <li><strong>Upload an Excel file</strong> (e.g., P6 export) and read it using <span class="inline-code">pandas</span>.</li>
+                <li><strong>Write Python scripts</strong> to analyze project data.</li>
+                <li><strong>Share your repository</strong> with collaborators (add them as collaborators in Settings).</li>
+                <li><strong>Explore GitHub Actions</strong> for automation (optional).</li>
+            </ul>
+            <div class="tip-box" style="margin-top:0.8rem;">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Remember:</strong> Your Codespace is your personal sandbox – experiment, break things, and rebuild. That's how you learn!
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <div class="footer">
+            <i class="fab fa-github"></i> GitHub &amp; Codespaces &nbsp;·&nbsp;
+            <i class="fas fa-check-circle" style="color:#2e7d32;"></i> Ready to code! &nbsp;·&nbsp;
+            <i class="fas fa-cloud"></i> Cloud Development
+        </div>
+
+    </div>
+</body>
+</html>
