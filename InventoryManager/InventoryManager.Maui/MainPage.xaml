@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InteriorInventory.Maui.MainPage"
+             BackgroundColor="{StaticResource Paper}"
+             Title="Studio Inventory">
+    <ScrollView>
+        <VerticalStackLayout Padding="18,12" Spacing="12">
+            <Label Text="MATERIALS" TextColor="{StaticResource Coral}" FontSize="12" FontAttributes="Bold" />
+            <Label Text="Keep every project moving" TextColor="{StaticResource Ink}" FontSize="27" FontAttributes="Bold" />
+            <Label x:Name="Summary" TextColor="{StaticResource Ink}" FontAttributes="Bold" FontSize="16" />
+            <SearchBar x:Name="Search" Placeholder="Search materials, suppliers or projects" TextChanged="OnSearchChanged" BackgroundColor="White" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Text="Low stock" Clicked="OnLowStockClicked" BackgroundColor="#E8B86A" TextColor="{StaticResource Ink}" />
+                <Button Grid.Column="1" Text="+ Add material" Clicked="OnAddClicked" BackgroundColor="{StaticResource Ink}" TextColor="White" />
+            </Grid>
+            <CollectionView x:Name="InventoryList" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="#E3DDD0" BackgroundColor="White" Padding="14" Margin="0,0,0,10">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="{Binding Name}" TextColor="{StaticResource Ink}" FontAttributes="Bold" FontSize="17" />
+                                    <Label Text="{Binding Category}" TextColor="#617072" FontSize="13" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="1" Text="{Binding QuantityLabel}" TextColor="{StaticResource Ink}" FontAttributes="Bold" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

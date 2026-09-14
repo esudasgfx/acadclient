@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# .NET and Xamarin/MAUI
+**/bin/
+**/obj/
+*.user
+*.suo
+.vs/
+
+# Local databases and secrets
+*.db3
+*.db
+appsettings.Local.json
+
+# Docker/local environment
+.env
+docker-data/

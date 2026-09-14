@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>monoandroid11.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>InteriorInventory.Android</RootNamespace>
+    <AssemblyName>InteriorInventory</AssemblyName>
+    <AndroidApplication>true</AndroidApplication>
+    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <ApplicationTitle>Studio Inventory</ApplicationTitle>
+    <ApplicationId>com.interiorinventory.studio</ApplicationId>
+    <AndroidSupportedAbis>arm64-v8a;x86_64</AndroidSupportedAbis>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InventoryManager.csproj" />
+    <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.3.0.2" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.7" />
+  </ItemGroup>
+</Project>
