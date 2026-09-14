@@ -1,6 +1,18 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0
 WORKDIR /src
+ENV ANDROID_HOME=/android-sdk
+ENV ANDROID_SDK_ROOT=/android-sdk
 COPY . .
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends ca-certificates openjdk-17-jdk unzip wget \
+	&& rm -rf /var/lib/apt/lists/*
+RUN mkdir -p "$ANDROID_HOME/cmdline-tools" \
+	&& wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/android-tools.zip \
+	&& unzip -q /tmp/android-tools.zip -d "$ANDROID_HOME/cmdline-tools" \
+	&& mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest" \
+	&& rm /tmp/android-tools.zip \
+	&& yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses \
+	&& "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 RUN dotnet workload install maui-android
 RUN dotnet restore InventoryManager.Maui/InventoryManager.Maui.csproj
-RUN dotnet build InventoryManager.Maui/InventoryManager.Maui.csproj -c Release --no-restore
+RUN dotnet publish InventoryManager.Maui/InventoryManager.Maui.csproj -f net8.0-android -c Debug --no-restore -p:AndroidSdkDirectory=/android-sdk -p:AndroidPackageFormat=apk -o /out

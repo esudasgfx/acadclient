@@ -85,8 +85,27 @@ Xamarin is retired by Microsoft. This project is retained because it was the req
 Build the MAUI Android project in Docker from `InventoryManager/`:
 
 ```bash
-docker build -f Dockerfile.maui .
+docker build -f Dockerfile.maui -t inventorymanager-maui-builder .
 ```
+
+Extract the APK from the image:
+
+```bash
+docker create --name inventory-apk inventorymanager-maui-builder
+mkdir -p apk-output
+docker cp inventory-apk:/out/. apk-output/
+docker rm inventory-apk
+find apk-output -name '*.apk' -print
+```
+
+To install and test on a connected Android device or running emulator, enable USB debugging and confirm that ADB can see it:
+
+```bash
+adb devices
+adb install -r apk-output/*-Signed.apk
+```
+
+Launch the app by opening **Studio Inventory** on the device. Test the seeded materials, search, low-stock filter, and add-material flow. The Docker container builds the APK but does not provide an Android emulator; use a local emulator, a USB device, or Android Studio for that step.
 
 The mobile clients currently use SQLite for offline-first local data. The API is the shared source of truth for multi-user synchronization; API synchronization/authentication should be added before production rollout.
 
