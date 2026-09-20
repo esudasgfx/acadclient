@@ -1,0 +1,102 @@
+/* ============================================================
+SKILL SWAP PLATFORM - Main CSS File
+File path: css/style.css
+============================================================ */
+/* Global Theme variables */
+:root {
+--primary: #4361ee;
+--primary-dark: #3a56d4;
+--secondary: #7209b7;
+--success: #4cc9f0;
+--danger: #f72585;
+--warning: #f8961e;
+--dark: #0b090a;
+--light: #f8961e;
+--text-light: #fffffe;
+--text-muted: #a7a9be;
+/* Gaming HUD dark colors */
+--bg-dark: #0f0e17;
+--bg-card: #1a1a2e;
+--bg-card-hover: #2a2a3e;
+/* Neon glow shadows */
+--shadow-glow: 0 0 25px rgba(67, 97, 238, 0.15);
+--shadow-card: 0 8px 32px rgba(0, 0, 0, 0.35);
+--border-glow: 0 0 15px rgba(67, 97, 238, 0.2);
+}
+body {
+font-family: 'Inter', sans-serif;
+background-color: var(--bg-dark);
+color: var(--text-light);
+margin: 0;
+}
+/* Card layout redesign overrides */
+.card {
+background: var(--bg-card) !important;
+border: 1px solid rgba(255, 255, 255, 0.05) !important;
+border-radius: 12px !important;
+box-shadow: var(--shadow-card) !important;
+transition: all 0.3s ease !important;
+}
+.card:hover {
+transform: translateY(-3px);
+border-color: rgba(67, 97, 238, 0.25) !important;
+box-shadow: var(--shadow-glow) !important;
+}
+.card-header {
+background: rgba(255, 255, 255, 0.02) !important;
+border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+font-weight: 700;
+color: var(--text-light);
+font-size: 0.95rem;
+}
+/* Gamified custom HUD badges */
+.rank-badge {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+padding: 5px 12px;
+border-radius: 20px;
+font-weight: 700;
+font-size: 0.8rem;
+text-transform: uppercase;
+}
+.rank-iron { background: #2d2d2d; color: #a7a9be; }
+.rank-bronze { background: #4a3728; color: #cd7f32; }
+.rank-silver { background: #3a3a4a; color: #e2e8f0; }
+.rank-gold { background: #4a3a1a; color: #eab308; }
+.rank-platinum { background: #1a3a4a; color: #06b6d4; }
+.rank-radiant { background: #4a1a2a; color: #f72585; }
+.coin-display {
+display: inline-flex;
+align-items: center;
+gap: 5px;
+padding: 4px 12px;
+background: rgba(255, 180, 0, 0.08);
+border-radius: 20px;
+color: #ffb400;
+font-weight: 700;
+font-size: 0.8rem;
+}
+/* Custom experience bar */
+.progress-custom {
+height: 8px;
+background: rgba(255, 255, 255, 0.08);
+border-radius: 10px;
+overflow: hidden;
+}
+.progress-custom .progress-bar {
+background: linear-gradient(90deg, var(--primary), var(--secondary));
+border-radius: 10px;
+transition: width 0.6s ease;
+}
+/* Skill Tags indicators */
+.skill-tag {
+display: inline-block;
+padding: 3px 12px;
+border-radius: 15px;
+font-size: 0.75rem;
+font-weight: 600;
+margin: 3px;
+}
+.skill-tag.offer { background: rgba(76, 201, 240, 0.1); border: 1px solid rgba(76, 201, 240, 0.2); color: #4cc9f0; }
+.skill-tag.want { background: rgba(247, 37, 133, 0.1); border: 1px solid rgba(247, 37, 133, 0.2); color: #f72585; }
